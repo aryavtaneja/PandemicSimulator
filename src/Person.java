@@ -17,6 +17,46 @@ public class Person {
       infected = false;
       totalPeople++;
    }
+   
+   public void genCondition(){
+      int personAge = this.age;
+      if(personAge <= 18 && personAge > 0){
+         int rand = ((int)(Math.random() * 99)) + 1;
+         if(rand <= 5){
+            this.preCondition = true;
+         }
+      }
+      else if(personAge <= 24){
+         int rand = ((int)(Math.random() * 99)) + 1;
+         if(rand <= 9){
+            this.preCondition = true;
+         }
+      }
+      else if(personAge <= 34){
+         int rand = ((int)(Math.random() * 99)) + 1;   
+         if(rand <= 13){
+            this.preCondition = true;
+         } 
+      }
+      else if(personAge <= 44){
+         int rand = ((int)(Math.random() * 99)) + 1;   
+         if(rand <= 21){
+            this.preCondition = true;
+         } 
+      }
+      else if(personAge <= 54){
+         int rand = ((int)(Math.random() * 99)) + 1;   
+         if(rand <= 32){
+            this.preCondition = true;
+         } 
+      }
+      else{
+         int rand = ((int)(Math.random() * 99)) + 1;   
+         if(rand <= 48){
+            this.preCondition = true;
+         } 
+      }
+   }
 
    public void generateAge() {
       int rand = (int) ((Math.random() * 79) + 1);
