@@ -6,27 +6,18 @@ public class Person {
    private static int numCases = 0;
    private static int numDeaths = 0;
    private static int totalPeople = 0;
-   private static int year = 0;
+
    private int age;
    private boolean preCondition;
+   private boolean susceptible;
    private boolean infected;
+   private boolean dead;
 
-   public Person(int age, boolean preCondition) {
-      this.age = age;
-      this.preCondition = preCondition;
+   public Person() {
+      this.age = (int) (Math.random() * 29199);
+      this.preCondition = (Math.random() > 0.5);
       infected = false;
       totalPeople++;
-   }
-
-   public void generateAge() {
-      int rand = (int) ((Math.random() * 79) + 1);
-      this.age = rand;
-      if (year >= 1) {
-         age += year;
-      }
-      if (age > 80) {
-         die();
-      }
    }
 
    public void infect() {
