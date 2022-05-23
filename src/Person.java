@@ -23,7 +23,10 @@ public class Person {
    public Person() {
       this.age = (int) (Math.random() * 29199);
       this.preCondition = (Math.random() > 0.5);
-      infected = false;
+      this.susceptible = true;
+      this.infected = false;
+      this.dead = false;
+      this.incubation = 0;
       totalPeople++;
    }
 
