@@ -15,8 +15,9 @@ public class Person {
     *                     rate of death
     * @param susceptible  If the person is susceptible to the disease
     * @param infected     If the person is infected
-    * 
+    * @param dead         If the person is dead
     * @param incubation   The number of days before the person shows symptoms
+    * @param mortality    The rate of mortality for this person
     */
    private static int numCases = 0;
    private static int numDeaths = 0;
