@@ -6,8 +6,6 @@
 
 package src;
 
-import java.util.ArrayList;
-
 public class Virus {
 
     /**
@@ -28,8 +26,8 @@ public class Virus {
      *                         and is able to die. Every day of this period, they
      *                         have a chance of death based on mortality, age and
      *                         preexisting conditions. If they survive these many
-     *                         days, they are
-     *                         considered recovered and cannot be infected again.
+     *                         days, they are considered recovered and cannot be 
+     *                         infected again.
      */
 
     private double infectability;
