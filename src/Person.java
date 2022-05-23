@@ -3,6 +3,10 @@ package src;
 import java.util.*;
 
 public class Person {
+
+   /**
+    * @param incubation the number of days before the person shows symptoms
+    */
    private static int numCases = 0;
    private static int numDeaths = 0;
    private static int totalPeople = 0;
@@ -10,6 +14,7 @@ public class Person {
    private int age;
    private boolean preCondition;
    private boolean infected;
+   private int incubation;
 
    public Person(int age, boolean preCondition) {
       this.age = age;
@@ -17,44 +22,39 @@ public class Person {
       infected = false;
       totalPeople++;
    }
-   
-   public void genCondition(){
+
+   public void genCondition() {
       int personAge = this.age;
-      if(personAge <= 18 && personAge > 0){
-         int rand = ((int)(Math.random() * 99)) + 1;
-         if(rand <= 5){
+      if (personAge <= 18 && personAge > 0) {
+         int rand = ((int) (Math.random() * 99)) + 1;
+         if (rand <= 5) {
             this.preCondition = true;
          }
-      }
-      else if(personAge <= 24){
-         int rand = ((int)(Math.random() * 99)) + 1;
-         if(rand <= 9){
+      } else if (personAge <= 24) {
+         int rand = ((int) (Math.random() * 99)) + 1;
+         if (rand <= 9) {
             this.preCondition = true;
          }
-      }
-      else if(personAge <= 34){
-         int rand = ((int)(Math.random() * 99)) + 1;   
-         if(rand <= 13){
+      } else if (personAge <= 34) {
+         int rand = ((int) (Math.random() * 99)) + 1;
+         if (rand <= 13) {
             this.preCondition = true;
-         } 
-      }
-      else if(personAge <= 44){
-         int rand = ((int)(Math.random() * 99)) + 1;   
-         if(rand <= 21){
+         }
+      } else if (personAge <= 44) {
+         int rand = ((int) (Math.random() * 99)) + 1;
+         if (rand <= 21) {
             this.preCondition = true;
-         } 
-      }
-      else if(personAge <= 54){
-         int rand = ((int)(Math.random() * 99)) + 1;   
-         if(rand <= 32){
+         }
+      } else if (personAge <= 54) {
+         int rand = ((int) (Math.random() * 99)) + 1;
+         if (rand <= 32) {
             this.preCondition = true;
-         } 
-      }
-      else{
-         int rand = ((int)(Math.random() * 99)) + 1;   
-         if(rand <= 48){
+         }
+      } else {
+         int rand = ((int) (Math.random() * 99)) + 1;
+         if (rand <= 48) {
             this.preCondition = true;
-         } 
+         }
       }
    }
 
@@ -69,10 +69,34 @@ public class Person {
       }
    }
 
-   public void infect() {
-      int rand = (int) (Math.random() + 1);
-      if (rand == 1) {
-         this.infected = true;
+   /**
+    * This method is called when a person is in close contact with a carrier. It
+    * will determine if them person will be affected.
+    * 
+    * @param virus The virus that the person is infected with
+    */
+   public void closeContact(Virus virus) {
+      if (infected) {
+         return;
+      }
+      this.infected = true;
+      int rand = (int) ((Math.random() * 99) + 1);
+      if (rand <= virus.getInfectability() * 100) {
+         startIncubation(virus.getIncubation());
+      }
+   }
+
+   public void startIncubation(int time) {
+      incubation = time;
+   }
+
+   public void update() {
+      if (incubation > 0) {
+         incubation--;
+      }
+      if (incubation == 0) {
+         int rand = (int) ((Math.random() * 99) + 1);
+         // TODO: to die or not to die, that is to be determined
       }
    }
 
