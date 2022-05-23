@@ -1,5 +1,6 @@
 package src;
 
+import java.beans.PropertyEditor;
 import java.util.*;
 
 public class Person {
@@ -17,20 +18,13 @@ public class Person {
    private boolean infected;
    private boolean dead;
    private int incubation;
+   private double mortality;
 
    public Person() {
       this.age = (int) (Math.random() * 29199);
       this.preCondition = (Math.random() > 0.5);
       infected = false;
       totalPeople++;
-   }
-
-   public void infect() {
-      int rand = (int) (Math.random() + 1);
-      if (rand == 1) {
-         this.infected = true;
-         numCases++;
-      }
    }
 
    public void genCondition() {
@@ -81,18 +75,21 @@ public class Person {
     * @param virus The virus that the person is infected with
     */
    public void closeContact(Virus virus) {
-      if (infected) {
+      if (infected || dead || !susceptible) {
          return;
       }
+      numCases++;
       this.infected = true;
       int rand = (int) ((Math.random() * 99) + 1);
       if (rand <= virus.getInfectability() * 100) {
-         startIncubation(virus.getIncubation());
+         incubation = virus.getIncubation();
+         calcMortality(virus.getMortality());
+
       }
    }
 
-   public void startIncubation(int time) {
-      incubation = time;
+   public void calcMortality(double rate) {
+      mortality = preCondition ? rate * 2 : rate;
    }
 
    /**
@@ -104,7 +101,9 @@ public class Person {
       }
       if (incubation == 0) {
          int rand = (int) ((Math.random() * 99) + 1);
-         // TODO: to die or not to die, that is to be determined
+         if (rand <= mortality * 100) {
+            die();
+         }
       }
    }
 
