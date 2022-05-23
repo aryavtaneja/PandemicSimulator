@@ -10,8 +10,12 @@ public class Person {
     * @param numRecovered The number of people who recovered
     * 
     * 
+    * @param age          The age of the person
     * @param preCondition If the person have a preexisting condition that increases
     *                     rate of death
+    * @param susceptible  If the person is susceptible to the disease
+    * @param infected     If the person is infected
+    * 
     * @param incubation   The number of days before the person shows symptoms
     */
    private static int numCases = 0;
@@ -34,7 +38,6 @@ public class Person {
       this.infected = false;
       this.dead = false;
       this.incubation = 0;
-      totalPeople++;
    }
 
    public void genCondition() {
