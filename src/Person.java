@@ -29,6 +29,9 @@ public class Person {
       int rand = (int) (Math.random() + 1);
       if (rand == 1) {
          this.infected = true;
+         numCases++;
+      }
+   }
 
    public void genCondition() {
       int personAge = this.age;
@@ -66,11 +69,6 @@ public class Person {
    }
 
    public void generateAge() {
-      int rand = (int) ((Math.random() * 79) + 1);
-      this.age = rand;
-      if (year >= 1) {
-         age += year;
-      }
       if (age > 80) {
          die();
       }
