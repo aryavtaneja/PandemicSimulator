@@ -1,16 +1,21 @@
 package src;
 
-import java.beans.PropertyEditor;
 import java.util.*;
 
 public class Person {
 
    /**
-    * @param incubation the number of days before the person shows symptoms
+    * @param numCases     The number of people infected
+    * @param numDeaths    The number of people who died
+    * @param numRecovered The number of people who recovered
+    * 
+    * 
+    * @param preCondition If the person have a preexisting condition that increases rate of death
+    * @param incubation   The number of days before the person shows symptoms
     */
    private static int numCases = 0;
    private static int numDeaths = 0;
-   private static int totalPeople = 0;
+   private static int numRecovered = 0;
 
    private int age;
    private boolean preCondition;
@@ -24,7 +29,6 @@ public class Person {
       this.age = (int) (Math.random() * 29199);
       this.preCondition = (Math.random() > 0.5);
       infected = false;
-      totalPeople++;
    }
 
    public void genCondition() {
@@ -111,6 +115,6 @@ public class Person {
       this.age = 0;
       this.preCondition = false;
       this.infected = false;
-      totalPeople--;
+      numDeaths++;
    }
 }
