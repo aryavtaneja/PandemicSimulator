@@ -90,6 +90,9 @@ public class Person {
       incubation = time;
    }
 
+   /**
+    * update the person's status, called in the main loop every interation.
+    */
    public void update() {
       if (incubation > 0) {
          incubation--;
