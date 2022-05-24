@@ -29,6 +29,7 @@ public class Person {
    private boolean infected;
    private boolean dead;
    private int incubation;
+   private int resistance;
    private double mortality;
 
    public Person() {
@@ -39,47 +40,54 @@ public class Person {
       this.infected = false;
       this.dead = false;
       this.incubation = 0;
+      this.resistance = 0;
+   }
+
+   public void generateAge() {
+      if (age > 80) {
+         die();
+      }
    }
    
    public void genCondition(){
-      int personAge = this.age;
-      if(personAge <= 18 && personAge > 0){
-         int rand = ((int)(Math.random() * 99)) + 1;
-         if(rand <= 5){
-            this.preCondition = true;
-         }
-      }
-      else if(personAge <= 24){
-         int rand = ((int)(Math.random() * 99)) + 1;
-         if(rand <= 9){
-            this.preCondition = true;
-         }
-      }
-      else if(personAge <= 34){
-         int rand = ((int)(Math.random() * 99)) + 1;   
-         if(rand <= 13){
-            this.preCondition = true;
-         } 
-      }
-      else if(personAge <= 44){
-         int rand = ((int)(Math.random() * 99)) + 1;   
-         if(rand <= 21){
-            this.preCondition = true;
-         } 
-      }
-      else if(personAge <= 54){
-         int rand = ((int)(Math.random() * 99)) + 1;   
-         if(rand <= 32){
-            this.preCondition = true;
-         } 
-      }
-      else{
-         int rand = ((int)(Math.random() * 99)) + 1;   
-         if(rand <= 48){
-            this.preCondition = true;
-         } 
+   int personAge = this.age;
+   if(personAge <= 18 && personAge > 0){
+      int rand = ((int)(Math.random() * 99)) + 1;
+      if(rand <= 5){
+         this.preCondition = true;
       }
    }
+   else if(personAge <= 24){
+      int rand = ((int)(Math.random() * 99)) + 1;
+      if(rand <= 9){
+         this.preCondition = true;
+      }
+   }
+   else if(personAge <= 34){
+      int rand = ((int)(Math.random() * 99)) + 1;   
+      if(rand <= 13){
+         this.preCondition = true;
+      } 
+   }
+   else if(personAge <= 44){
+      int rand = ((int)(Math.random() * 99)) + 1;   
+      if(rand <= 21){
+         this.preCondition = true;
+      } 
+   }
+   else if(personAge <= 54){
+      int rand = ((int)(Math.random() * 99)) + 1;   
+      if(rand <= 32){
+         this.preCondition = true;
+      } 
+   }
+   else{
+      int rand = ((int)(Math.random() * 99)) + 1;   
+      if(rand <= 48){
+         this.preCondition = true;
+      } 
+   }
+}
    public void generateAge() {
       if (age > 80) {
          die();
@@ -101,6 +109,7 @@ public class Person {
       int rand = (int) ((Math.random() * 99) + 1);
       if (rand <= virus.getInfectability() * 100) {
          incubation = virus.getIncubation();
+         resistance = virus.getResistance();
          calcMortality(virus.getMortality());
 
       }
@@ -122,13 +131,17 @@ public class Person {
          if (rand <= mortality * 100) {
             die();
          }
+         resistance--;
+         if(resistance == 0){
+            this.susceptible = false;
+         }
       }
    }
 
    public void die() {
-      this.age = 0;
-      this.preCondition = false;
       this.infected = false;
+      this.dead = true;
+      numCases--;
       numDeaths++;
    }
 }
