@@ -80,6 +80,7 @@ public class Person {
             }
          }
       }
+      // age++;
    }
 
    public void die() {
