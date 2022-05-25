@@ -17,10 +17,6 @@ public class Person {
     * @param incubation   The number of days before the person shows symptoms
     * @param mortality    The rate of mortality for this person
     */
-   private static int numCases = 0;
-   private static int numDeaths = 0;
-   private static int numRecovered = 0;
-
    private int age;
    private boolean preCondition;
    private boolean susceptible;
@@ -33,7 +29,7 @@ public class Person {
    public Person() {
       this.age = (int) (Math.random() * 29199);
       this.preCondition = (Math.random() > 0.95);
-      infected = false;
+      this.infected = false;
       this.susceptible = true;
       this.infected = false;
       this.dead = false;
@@ -51,7 +47,6 @@ public class Person {
       if (infected || dead || !susceptible) {
          return;
       }
-      numCases++;
       this.infected = true;
       int rand = (int) ((Math.random() * 99) + 1);
       if (rand <= virus.getInfectability() * 100) {
@@ -81,7 +76,6 @@ public class Person {
          resistance--;
          if (resistance == 0) {
             this.susceptible = false;
-            numRecovered++;
          }
       }
    }
@@ -89,7 +83,5 @@ public class Person {
    public void die() {
       this.infected = false;
       this.dead = true;
-      numCases--;
-      numDeaths++;
    }
 }
