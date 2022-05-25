@@ -29,22 +29,24 @@ public class Virus {
      *                         days, they are considered recovered and cannot be 
      *                         infected again.
      */
-
+	private String name;
     private double infectability;
-    private double mortality;
+	private double mortality;
     private boolean[] susceptibilities;
     private int incubation;
     private int resistance;
-
+    
+    public Virus() {
+    	
+    }
     public Virus(double infectability, double mortality, boolean[] susceptibilities, int incubation, int resistance) {
+    	System.out.println("Hello World!");
         this.infectability = infectability;
         this.mortality = mortality;
         this.susceptibilities = susceptibilities;
         this.incubation = incubation;
         this.resistance = resistance;
     }
-
-    public Virus() {}
 
     public double getInfectability() {
         return infectability;
@@ -65,19 +67,29 @@ public class Virus {
     public int getResistance() {
         return resistance;
     }
-
+    public String getName() {
+    	return name;
+    }
     public void setInfectability(double infectability) {
-        this.infectability = infectability; 
+		this.infectability = infectability;
+	}
 
-    }
-    public void setMortality (double mortality) {
-        this.mortality = mortality; 
-    }
-    public void setIncubation (int incubation) {
-        this.incubation = incubation; 
-    }
-    public void setresistance(int resistance) {
-        this.resistance = resistance; 
-    }
+	public void setMortality(double mortality) {
+		this.mortality = mortality;
+	}
+
+	public void setSusceptibilities(boolean[] susceptibilities) {
+		this.susceptibilities = susceptibilities;
+	}
+
+	public void setIncubation(int incubation) {
+		this.incubation = incubation;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setResistance(int resistance) {
+		this.resistance = resistance;
+	}
 
 }

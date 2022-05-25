@@ -1,4 +1,12 @@
+/**
+ * Defines class for a virus in the simulator
+ * @author Daniel Welicki
+ * @author Joshua Wu
+ * @author Ronan Smith 
+ */
+
 package src;
+
 
 public class Person {
 
