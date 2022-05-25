@@ -1,15 +1,8 @@
 package src;
 
-import java.util.*;
-
 public class Person {
 
    /**
-    * @param numCases     The number of people infected
-    * @param numDeaths    The number of people who died
-    * @param numRecovered The number of people who recovered
-    * 
-    * 
     * @param age          The age of the person
     * @param preCondition If the person have a preexisting condition that increases
     *                     rate of death
@@ -19,32 +12,25 @@ public class Person {
     * @param incubation   The number of days before the person shows symptoms
     * @param mortality    The rate of mortality for this person
     */
-   private static int numCases = 0;
-   private static int numDeaths = 0;
-   private static int numRecovered = 0;
-
+   
    private int age;
    private boolean preCondition;
    private boolean susceptible;
    private boolean infected;
    private boolean dead;
    private int incubation;
+   private int resistance;
    private double mortality;
 
    public Person() {
       this.age = (int) (Math.random() * 29199);
       this.preCondition = (Math.random() > 0.95);
-      infected = false;
+      this.infected = false;
       this.susceptible = true;
       this.infected = false;
       this.dead = false;
       this.incubation = 0;
-   }
-
-   public void generateAge() {
-      if (age > 80) {
-         die();
-      }
+      this.resistance = 0;
    }
 
    /**
@@ -57,11 +43,11 @@ public class Person {
       if (infected || dead || !susceptible) {
          return;
       }
-      numCases++;
       this.infected = true;
       int rand = (int) ((Math.random() * 99) + 1);
       if (rand <= virus.getInfectability() * 100) {
          incubation = virus.getIncubation();
+         resistance = virus.getResistance();
          calcMortality(virus.getMortality());
 
       }
@@ -75,21 +61,38 @@ public class Person {
     * update the person's status, called in the main loop every interation.
     */
    public void update() {
-      if (incubation > 0) {
-         incubation--;
+      if (dead) {
+         return;
       }
-      if (incubation == 0) {
-         int rand = (int) ((Math.random() * 99) + 1);
-         if (rand <= mortality * 100) {
-            die();
+
+      if (age >= 29200) {
+         die();
+         return;
+      }
+
+      if (infected) {
+         if (incubation > 0) {
+            incubation--;
+         }
+         if (incubation == 0) {
+            int rand = (int) ((Math.random() * 99) + 1);
+            if (rand <= mortality * 100) {
+               die();
+               return;
+            }
+            resistance--;
+            if (resistance == 0) {
+               this.susceptible = false;
+            }
          }
       }
+
+      age++;
    }
 
    public void die() {
-      this.age = 0;
-      this.preCondition = false;
       this.infected = false;
-      numDeaths++;
+      this.dead = true;
+      this.susceptible = false;
    }
 }
