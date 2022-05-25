@@ -17,7 +17,8 @@ public class Person {
     * @param incubation   The number of days before the person shows symptoms
     * @param mortality    The rate of mortality for this person
     */
-   // private int age;
+   
+   private int age;
    private boolean preCondition;
    private boolean susceptible;
    private boolean infected;
@@ -27,7 +28,7 @@ public class Person {
    private double mortality;
 
    public Person() {
-      // this.age = (int) (Math.random() * 29199);
+      this.age = (int) (Math.random() * 29199);
       this.preCondition = (Math.random() > 0.95);
       this.infected = false;
       this.susceptible = true;
@@ -65,6 +66,15 @@ public class Person {
     * update the person's status, called in the main loop every interation.
     */
    public void update() {
+      if (dead) {
+         return;
+      }
+
+      if (age >= 29200) {
+         die();
+         return;
+      }
+
       if (infected) {
          if (incubation > 0) {
             incubation--;
@@ -73,6 +83,7 @@ public class Person {
             int rand = (int) ((Math.random() * 99) + 1);
             if (rand <= mortality * 100) {
                die();
+               return;
             }
             resistance--;
             if (resistance == 0) {
@@ -80,6 +91,8 @@ public class Person {
             }
          }
       }
+
+      age++;
    }
 
    public void die() {
