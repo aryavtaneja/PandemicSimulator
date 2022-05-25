@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
+import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JSlider;
@@ -22,6 +23,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 
 public class MainWindow extends JFrame {
 	
@@ -51,7 +54,7 @@ public class MainWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public MainWindow() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\danie\\Downloads\\unknown.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("\\unknown.png"));
 		setTitle("Pestilence Corporation - Pandemic Simulator");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 720);
@@ -65,19 +68,21 @@ public class MainWindow extends JFrame {
 		
 		JSlider mortality = new JSlider();
 		mortality.setMinorTickSpacing(1);
-		mortality.setMajorTickSpacing(2);
+		mortality.	setMajorTickSpacing(2);
 		mortality.setPaintLabels(true);
 		mortality.setPaintTicks(true);
 		mortality.setValue(0);
 		mortality.setMaximum(10);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Infant");
+		JCheckBox chckbxInfant = new JCheckBox("Infant");
 		
 		JCheckBox chckbxYouth = new JCheckBox("Youth");
 		
 		JCheckBox chckbxAdult = new JCheckBox("Adult");
 		
 		JCheckBox chckbxBoomer = new JCheckBox("Boomer");
+
+ 
 		
 		JSlider infectability = new JSlider();
 		infectability.setValue(0);
@@ -110,16 +115,41 @@ public class MainWindow extends JFrame {
 		JLabel incubationPeriod = new JLabel("Incubation Period");
 		incubationPeriod.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
-		JButton startButton = new JButton("Start");
+		JButton startButton = new JButton("Update");
 		startButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Simulator.updateInfectability(infectability.getValue());
 				Simulator.updateName(DiseaseName.getText());
 				Simulator.updateMortality(mortality.getValue());
+				boolean[] sus = new boolean[4];
+				sus[0] = chckbxInfant.isSelected();
+				sus[1] = chckbxYouth.isSelected();
+				sus[2] = chckbxAdult.isSelected();
+				sus[3] = chckbxBoomer.isSelected();
+				Simulator.updateSus(sus);
+				Simulator.updateIncubation(incubationPeriodSlider.getValue());
+				
 
 			}
 		});
+		
+		JButton nextDayButton = new JButton("Next");
+		nextDayButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		nextDayButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JSlider advance = new JSlider();
+		advance.setMajorTickSpacing(1);
+		advance.setSnapToTicks(true);
+		advance.setMaximum(14);
+		advance.setPaintTicks(true);
+		advance.setPaintLabels(true);
+		
+		JLabel daysLabel = new JLabel("Days to Forward");
+		daysLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -129,20 +159,10 @@ public class MainWindow extends JFrame {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(chckbxYouth, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(chckbxBoomer, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(mortality, GroupLayout.PREFERRED_SIZE, 378, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(868, Short.MAX_VALUE))
+							.addComponent(chckbxBoomer, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(MortalityLabel, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap(1093, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(infectability, GroupLayout.PREFERRED_SIZE, 378, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(868, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(DiseaseName, GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
-							.addGap(848))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(infectivityLbael, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap(1093, Short.MAX_VALUE))
@@ -150,22 +170,35 @@ public class MainWindow extends JFrame {
 							.addComponent(incubationPeriod, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap(1093, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(incubationPeriodSlider, GroupLayout.PREFERRED_SIZE, 378, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(868, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(Sucspet, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap(1093, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(diseaseNameLabel, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE)
 							.addContainerGap(1093, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(startButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-									.addComponent(chckbxNewCheckBox, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(startButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(chckbxInfant, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addComponent(chckbxAdult, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)))
-							.addGap(1060))))
+							.addGap(1060))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(incubationPeriodSlider, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+								.addComponent(mortality, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+								.addComponent(infectability, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+								.addComponent(DiseaseName, GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE))
+							.addGap(848))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(advance, GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+							.addGap(848))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(nextDayButton, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(1060, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(daysLabel, GroupLayout.PREFERRED_SIZE, 153, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(1093, Short.MAX_VALUE))))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -194,11 +227,17 @@ public class MainWindow extends JFrame {
 						.addComponent(chckbxBoomer))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(chckbxNewCheckBox)
+						.addComponent(chckbxInfant)
 						.addComponent(chckbxAdult))
 					.addGap(18)
 					.addComponent(startButton, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(173, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+					.addComponent(daysLabel, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(nextDayButton, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(advance, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(23))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}

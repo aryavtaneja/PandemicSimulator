@@ -29,8 +29,8 @@ public class Simulator {
 	public static void updateMortality(double mortality) {
 		gameVirus.setMortality(mortality / 10 );
 	}
-	public static void updateSusceptibilities(boolean sus) {
-		gameVirus.setSusceptibilities(null);
+	public static void updateSus(boolean[] sus) {
+		gameVirus.setSusceptibilities(sus);
 	}
 	public static void updateIncubation(int incubation) {
 		gameVirus.setIncubation(incubation);

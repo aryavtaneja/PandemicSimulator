@@ -1,5 +1,5 @@
 /**
- * Defines class for a virus in the simulator
+ * Defines class for a person in the simulator
  * @author Daniel Welicki
  * @author Joshua Wu
  * @author Ronan Smith 
