@@ -44,6 +44,8 @@ public class Virus {
         this.resistance = resistance;
     }
 
+    public Virus() {}
+
     public double getInfectability() {
         return infectability;
     }
@@ -62,6 +64,20 @@ public class Virus {
 
     public int getResistance() {
         return resistance;
+    }
+
+    public void setInfectability(double infectability) {
+        this.infectability = infectability; 
+
+    }
+    public void setMortality (double mortality) {
+        this.mortality = mortality; 
+    }
+    public void setIncubation (int incubation) {
+        this.incubation = incubation; 
+    }
+    public void setresistance(int resistance) {
+        this.resistance = resistance; 
     }
 
 }
