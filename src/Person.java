@@ -39,7 +39,7 @@ public class Person {
       this.dead = false;
       this.incubation = 0;
       this.resistance = 0;
-   }   
+   }
 
    /**
     * This method is called when a person is in close contact with a carrier. It
@@ -79,8 +79,9 @@ public class Person {
             die();
          }
          resistance--;
-         if(resistance == 0){
+         if (resistance == 0) {
             this.susceptible = false;
+            numRecovered++;
          }
       }
    }
