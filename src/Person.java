@@ -65,17 +65,19 @@ public class Person {
     * update the person's status, called in the main loop every interation.
     */
    public void update() {
-      if (incubation > 0) {
-         incubation--;
-      }
-      if (incubation == 0) {
-         int rand = (int) ((Math.random() * 99) + 1);
-         if (rand <= mortality * 100) {
-            die();
+      if (infected) {
+         if (incubation > 0) {
+            incubation--;
          }
-         resistance--;
-         if (resistance == 0) {
-            this.susceptible = false;
+         if (incubation == 0) {
+            int rand = (int) ((Math.random() * 99) + 1);
+            if (rand <= mortality * 100) {
+               die();
+            }
+            resistance--;
+            if (resistance == 0) {
+               this.susceptible = false;
+            }
          }
       }
    }
