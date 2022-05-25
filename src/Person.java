@@ -17,7 +17,7 @@ public class Person {
     * @param incubation   The number of days before the person shows symptoms
     * @param mortality    The rate of mortality for this person
     */
-   private int age;
+   // private int age;
    private boolean preCondition;
    private boolean susceptible;
    private boolean infected;
@@ -27,7 +27,7 @@ public class Person {
    private double mortality;
 
    public Person() {
-      this.age = (int) (Math.random() * 29199);
+      // this.age = (int) (Math.random() * 29199);
       this.preCondition = (Math.random() > 0.95);
       this.infected = false;
       this.susceptible = true;
