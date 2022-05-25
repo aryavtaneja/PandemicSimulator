@@ -3,11 +3,6 @@ package src;
 public class Person {
 
    /**
-    * @param numCases     The number of people infected
-    * @param numDeaths    The number of people who died
-    * @param numRecovered The number of people who recovered
-    * 
-    * 
     * @param age          The age of the person
     * @param preCondition If the person have a preexisting condition that increases
     *                     rate of death
@@ -98,5 +93,6 @@ public class Person {
    public void die() {
       this.infected = false;
       this.dead = true;
+      this.susceptible = false;
    }
 }
