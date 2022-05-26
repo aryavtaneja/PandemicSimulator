@@ -2,8 +2,10 @@
  * Defines class for a person in the simulator
  * @author Daniel Welicki
  * @author Joshua Wu
- * @author Ronan Smith 
- */
+ * @author Ronan Smith
+ * @author Ethan Hu
+ */ 
+
 
 package src;
 

@@ -5,16 +5,21 @@
 
 package src;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JSlider;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
+<<<<<<< HEAD
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -25,14 +30,28 @@ import javax.swing.JButton;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.JMenuBar;
+=======
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+>>>>>>> 0550d4ff0c207cd18524cb54c4c6b645b7d667d8
 import javax.swing.JMenu;
-import java.awt.Color;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
+<<<<<<< HEAD
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
 import javax.swing.DropMode;
+=======
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+>>>>>>> 0550d4ff0c207cd18524cb54c4c6b645b7d667d8
 
 public class MainWindow extends JFrame {
 	
