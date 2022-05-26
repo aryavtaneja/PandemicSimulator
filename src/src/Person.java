@@ -7,7 +7,7 @@
  */ 
 
 
-package src.src;
+package src;
 
 
 public class Person {

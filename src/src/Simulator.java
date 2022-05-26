@@ -7,7 +7,7 @@
 
 
 
-package src.src;
+package src;
 import java.util.*; 
 
 public class Simulator {

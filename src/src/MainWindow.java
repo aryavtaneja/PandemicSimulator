@@ -3,7 +3,7 @@
  * @author Daniel Welicki 
  */
 
-package src.src;
+package src;
 
 import java.awt.Color;
 import java.awt.EventQueue;

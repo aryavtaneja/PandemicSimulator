@@ -4,7 +4,7 @@
  * @author Aryav Taneja
  */
 
-package src.src;
+package src;
 
 public class Virus {
 
