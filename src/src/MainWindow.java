@@ -15,9 +15,9 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JSlider;
 import javax.swing.JCheckBox;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -31,6 +31,8 @@ import javax.swing.SwingConstants;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JTextArea;
+import javax.swing.DropMode;
 
 public class MainWindow extends JFrame {
 	
@@ -104,6 +106,7 @@ public class MainWindow extends JFrame {
 		optionsMenu.add(incubationMenu);
 		
 		JSlider incubationPeriodSlider = new JSlider();
+		incubationPeriodSlider.setFont(new Font("Tahoma", Font.PLAIN, 5));
 		incubationPeriodSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				game.updateIncubation(incubationPeriodSlider.getValue());
@@ -159,7 +162,7 @@ public class MainWindow extends JFrame {
 		infectability.setMaximum(10);
 		infectability.setMajorTickSpacing(2);
 		
-		JMenu susMenu = new JMenu("Suscpetible Groups");
+		JMenu susMenu = new JMenu("Susceptible Groups");
 		susMenu.setMnemonic('5');
 		optionsMenu.add(susMenu);
 		
@@ -186,7 +189,7 @@ public class MainWindow extends JFrame {
 		updateSettings.setToolTipText("Update Settings");
 		updateSettings.setOpaque(false);
 		updateSettings.setHorizontalAlignment(SwingConstants.LEFT);
-		updateSettings.setFont(new Font("Calibri", Font.PLAIN, 14));
+		updateSettings.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		updateSettings.setFocusPainted(false);
 		updateSettings.setBorderPainted(false);
 		updateSettings.setBackground(Color.WHITE);
@@ -197,6 +200,7 @@ public class MainWindow extends JFrame {
 		optionsMenu.add(diseaseNameMenu);
 		
 		diseaseName = new JTextField();
+		diseaseName.setText("PAX-12");
 		diseaseName.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -211,17 +215,32 @@ public class MainWindow extends JFrame {
 		diseaseConfig.add(configMenu);
 		
 		
-		JButton nextDayButton_1 = new JButton();
-		nextDayButton_1.setFont(new Font("Calibri", Font.PLAIN, 14));
+		JButton fastForward = new JButton();
+		fastForward.setBounds(215, 566, 200, 37);
+		fastForward.setFont(new Font("Calibri", Font.PLAIN, 14));
+		
+		JMenu mnNewMenu = new JMenu("Simulation State");
+		configMenu.add(mnNewMenu);
+		
+		JButton endSimulation = new JButton("End Simulation");
+		mnNewMenu.add(endSimulation);
+		
+		JButton restartSimulation = new JButton("Restart Simulation");
+		mnNewMenu.add(restartSimulation);
+		
+		JMenu ffConfig = new JMenu("Fast Forward Config");
+		configMenu.add(ffConfig);
 		
 		
 		JLabel daysLabel = new JLabel("Days to Forward");
-		daysLabel.setFont(new Font("Calibri", Font.PLAIN, 16));
-		configMenu.add(daysLabel);
+		ffConfig.add(daysLabel);
+		daysLabel.setFont(new Font("Calibri", Font.PLAIN, 11));
 		JSlider advance = new JSlider();
+		ffConfig.add(advance);
+		advance.setFont(new Font("Tahoma", Font.PLAIN, 7));
 		advance.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				nextDayButton_1.setText("Forward " + advance.getValue() + " Days");
+				fastForward.setText("Forward " + advance.getValue() + " Days");
 			}
 		});
 		advance.setMinimum(1);
@@ -231,31 +250,120 @@ public class MainWindow extends JFrame {
 		advance.setPaintLabels(true);
 		advance.setMaximum(14);
 		advance.setMajorTickSpacing(1);
-		configMenu.add(advance);
+		
+		JMenu helpMenu = new JMenu("Help");
+		diseaseConfig.add(helpMenu);
+		
+		JMenu howToPlay = new JMenu("Description");
+		helpMenu.add(howToPlay);
+		helpMenu.setBounds(new Rectangle(200,250));
+		
+		JTextArea welcome = new JTextArea();
+		welcome.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		welcome.setWrapStyleWord(true);
+		welcome.setColumns(2);
+		welcome.setEditable(false);
+		welcome.setDropMode(DropMode.INSERT);
+		welcome.setLineWrap(true);
+		welcome.setText("Welcome to Pestilence Corporation. Pestilence Corporation is a pandemic simulator, operating off of several main variables.  Create your virus by setting the starting conditions, and see where the game will take you! Go to game config to edit how fast your fast forward option can be. Options are dynamically updatable through the course of a simulation. Go to simulation state to end the simulation.   ");
+		welcome.setBounds(new Rectangle(200,250));
+		howToPlay.add(welcome);
+		
+		JMenu variablesMenu = new JMenu("Variables");
+		helpMenu.add(variablesMenu);
+		
+		JMenu infectivityDropdown = new JMenu("Infectivity");
+		variablesMenu.add(infectivityDropdown);
+		
+		JTextArea welcome_1 = new JTextArea();
+		welcome_1.setWrapStyleWord(true);
+		welcome_1.setText("The probability that a person who interacts with an infected person also gets infected.  Based on a scale of 1-10, with 10 being the greatest.");
+		welcome_1.setLineWrap(true);
+		welcome_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		welcome_1.setEditable(false);
+		welcome_1.setDropMode(DropMode.INSERT);
+		welcome_1.setColumns(2);
+		welcome_1.setBounds(new Rectangle(0, 0, 200, 250));
+		infectivityDropdown.add(welcome_1);
+		
+		JMenu mortalityDropdown = new JMenu("Mortality");
+		variablesMenu.add(mortalityDropdown);
+		
+		JTextArea welcome_2 = new JTextArea();
+		welcome_2.setWrapStyleWord(true);
+		welcome_2.setText("A modifier for how lethal the disease is, although final chance of death is also a factor of age group and preexisting conditions. Based on a scale of 1-10, with 10 being the greatest.");
+		welcome_2.setLineWrap(true);
+		welcome_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		welcome_2.setEditable(false);
+		welcome_2.setDropMode(DropMode.INSERT);
+		welcome_2.setColumns(2);
+		welcome_2.setBounds(new Rectangle(0, 0, 200, 250));
+		mortalityDropdown.add(welcome_2);
+		
+		JMenu susDropdown = new JMenu("Susceptibilities ");
+		variablesMenu.add(susDropdown);
+		
+		JTextArea txtrWhichAgeGroups = new JTextArea();
+		txtrWhichAgeGroups.setWrapStyleWord(true);
+		txtrWhichAgeGroups.setText("Which age groups (children, adults, seniors) are more susceptible to the disease than others. Multiple are possible (i.e. children and seniors), so check off all groups that are susceptible to infection. ");
+		txtrWhichAgeGroups.setLineWrap(true);
+		txtrWhichAgeGroups.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		txtrWhichAgeGroups.setEditable(false);
+		txtrWhichAgeGroups.setDropMode(DropMode.INSERT);
+		txtrWhichAgeGroups.setColumns(2);
+		txtrWhichAgeGroups.setBounds(new Rectangle(0, 0, 200, 250));
+		susDropdown.add(txtrWhichAgeGroups);
+		
+		JMenu incubationDropdown = new JMenu("Incubation Period");
+		variablesMenu.add(incubationDropdown);
+		
+		JTextArea txtrTheNumberOf = new JTextArea();
+		txtrTheNumberOf.setWrapStyleWord(true);
+		txtrTheNumberOf.setText("The number of days which the virus incubates in an infected person. The person is able to spread the disease in this time, but isn't able to die during this time. Based on a scale of 1-31 days.\r\n");
+		txtrTheNumberOf.setLineWrap(true);
+		txtrTheNumberOf.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		txtrTheNumberOf.setEditable(false);
+		txtrTheNumberOf.setDropMode(DropMode.INSERT);
+		txtrTheNumberOf.setColumns(2);
+		txtrTheNumberOf.setBounds(new Rectangle(0, 0, 200, 250));
+		incubationDropdown.add(txtrTheNumberOf);
+		
+		JMenu resistanceDropdown = new JMenu("Resistance Period");
+		variablesMenu.add(resistanceDropdown);
+		
+		JTextArea txtrTheNumberOf_1 = new JTextArea();
+		txtrTheNumberOf_1.setWrapStyleWord(true);
+		txtrTheNumberOf_1.setText("The number of days that the person \"feels symptoms\" and is able to die. Every day of this period, they have a chance of death based on mortality, age and preexisting conditions. If they survive these many days, they are considered recovered and cannot be infected again. Based on a scale of 1-10, with 10 being the greatest.");
+		txtrTheNumberOf_1.setLineWrap(true);
+		txtrTheNumberOf_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		txtrTheNumberOf_1.setEditable(false);
+		txtrTheNumberOf_1.setDropMode(DropMode.INSERT);
+		txtrTheNumberOf_1.setColumns(2);
+		txtrTheNumberOf_1.setBounds(new Rectangle(0, 0, 200, 250));
+		resistanceDropdown.add(txtrTheNumberOf_1);
 		Game = new JPanel();
 		Game.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(Game);
 		statsScreen = new JPanel();
 		statsScreen.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		JPanel panel = new JPanel();
+		JPanel mainGame = new JPanel();
 		GroupLayout gl_Game = new GroupLayout(Game);
 		gl_Game.setHorizontalGroup(
 			gl_Game.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_Game.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
+				.addGroup(Alignment.TRAILING, gl_Game.createSequentialGroup()
+					.addContainerGap(68, Short.MAX_VALUE)
+					.addComponent(mainGame, GroupLayout.PREFERRED_SIZE, 732, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		gl_Game.setVerticalGroup(
 			gl_Game.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_Game.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 627, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addComponent(mainGame, GroupLayout.PREFERRED_SIZE, 627, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(22, Short.MAX_VALUE))
 		);
-		
 		JButton nextDayButton = new JButton();
+		nextDayButton.setBounds(10, 566, 195, 37);
 		nextDayButton.setText("Next Day");
 		nextDayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -263,34 +371,21 @@ public class MainWindow extends JFrame {
 		});
 		nextDayButton.setFont(new Font("Calibri", Font.PLAIN, 14));
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon(MainWindow.class.getResource("/img/back.png")));
+		JLabel worldBackground = new JLabel("");
+		worldBackground.setBounds(0, 11, 676, 544);
+		worldBackground.setIcon(new ImageIcon(MainWindow.class.getResource("/img/back.png")));
+		mainGame.setLayout(null);
+		mainGame.add(nextDayButton);
+		mainGame.add(fastForward);
+		mainGame.add(worldBackground);
 		
-		
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(nextDayButton, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(nextDayButton_1, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblNewLabel, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 674, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 525, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(nextDayButton, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-						.addComponent(nextDayButton_1, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE))
-					.addGap(24))
-		);
-		panel.setLayout(gl_panel);
+		JTextArea txtrWelcomeToPestilence = new JTextArea();
+		txtrWelcomeToPestilence.setFont(new Font("Franklin Gothic Book", Font.PLAIN, 13));
+		txtrWelcomeToPestilence.setLineWrap(true);
+		txtrWelcomeToPestilence.setText("Welcome to Pestilence Corporation. Craft your disease by going  to the Options, and let the infection begin. ");
+		txtrWelcomeToPestilence.setOpaque(false);
+		txtrWelcomeToPestilence.setBounds(10, 60, 663, 495);
+		mainGame.add(txtrWelcomeToPestilence);
 		Game.setLayout(gl_Game);
 	}
 }
