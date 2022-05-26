@@ -6,7 +6,7 @@ public class Simulator {
     private ArrayList<Person> susceptiblePeople = new ArrayList<Person>(); 
     private ArrayList<Person> infected = new ArrayList<Person>(); 
     private ArrayList<Person> dead = new ArrayList<Person>();
-    private static Virus gameVirus = new Virus();
+    private Virus gameVirus = new Virus();
     
     public Simulator() {
     	 for (int i = 0; i < population.length; i++) {
@@ -23,22 +23,22 @@ public class Simulator {
          }	
     }
    
-    public static void updateInfectability(double infectability) {
-		gameVirus.setInfectability(infectability / 10);
+    public void updateInfectability(int infectability) {
+		gameVirus.setInfectability(infectability / 10.0);
 	}
-	public static void updateMortality(double mortality) {
-		gameVirus.setMortality(mortality / 10 );
+	public void updateMortality(int mortality) {
+		gameVirus.setMortality(mortality / 10.0 );
 	}
-	public static void updateSus(boolean[] sus) {
+	public void updateSus(boolean[] sus) {
 		gameVirus.setSusceptibilities(sus);
 	}
-	public static void updateIncubation(int incubation) {
+	public void updateIncubation(int incubation) {
 		gameVirus.setIncubation(incubation);
 	}
-	public static void updateResistance(int resistance) {
+	public void updateResistance(int resistance) {
 		gameVirus.setResistance(resistance);
 	}
-	public static void updateName(String name) {
+	public void updateName(String name) {
 		gameVirus.setName(name);
 	}
 }
