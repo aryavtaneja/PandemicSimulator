@@ -1,18 +1,19 @@
+/**
+ * Main GUI for the game.
+ * @author Daniel Welicki 
+ */
+
 package src;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
-import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JSlider;
-import java.awt.List;
-import java.awt.Choice;
 import javax.swing.JCheckBox;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
@@ -23,21 +24,21 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
-import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
 import javax.swing.JMenuBar;
-import javax.swing.JTabbedPane;
 import javax.swing.JMenu;
 import java.awt.Color;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.JMenuItem;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
+import javax.swing.ImageIcon;
 
 public class MainWindow extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L; // Not necessary, but convention to keep this 
+
 	private static Simulator game = new Simulator();
 
 	private JPanel Game;
@@ -66,7 +67,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow() {
 		setFont(new Font("Calibri", Font.PLAIN, 12));
-		setIconImage(Toolkit.getDefaultToolkit().getImage("\\unknown.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/img/icon.png")));
 		setTitle("Pestilence Corporation - Pandemic Simulator");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 720, 720);
@@ -262,24 +263,31 @@ public class MainWindow extends JFrame {
 		});
 		nextDayButton.setFont(new Font("Calibri", Font.PLAIN, 14));
 		
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon(MainWindow.class.getResource("/img/back.png")));
+		
 		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(nextDayButton, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(nextDayButton_1)
-					.addContainerGap(420, Short.MAX_VALUE))
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(nextDayButton, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(nextDayButton_1, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE))
+						.addComponent(lblNewLabel, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 674, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap(566, Short.MAX_VALUE)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 525, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(nextDayButton_1, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-						.addComponent(nextDayButton, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE))
+						.addComponent(nextDayButton, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+						.addComponent(nextDayButton_1, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE))
 					.addGap(24))
 		);
 		panel.setLayout(gl_panel);

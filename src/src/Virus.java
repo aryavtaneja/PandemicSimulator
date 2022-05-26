@@ -40,7 +40,6 @@ public class Virus {
     	
     }
     public Virus(double infectability, double mortality, boolean[] susceptibilities, int incubation, int resistance) {
-    	System.out.println("Hello World!");
         this.infectability = infectability;
         this.mortality = mortality;
         this.susceptibilities = susceptibilities;

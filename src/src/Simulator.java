@@ -1,3 +1,12 @@
+/**
+ * Simulator class that simulates a play of the game
+ * @author Fiona
+ * @author Daniel Welicki
+ * @author Aryav Taneja 
+ */
+
+
+
 package src;
 import java.util.*; 
 
