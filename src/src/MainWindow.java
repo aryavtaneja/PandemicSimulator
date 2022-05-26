@@ -3,7 +3,7 @@
  * @author Daniel Welicki 
  */
 
-package src;
+package src.src;
 
 import java.awt.EventQueue;
 

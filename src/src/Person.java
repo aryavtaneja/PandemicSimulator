@@ -5,7 +5,7 @@
  * @author Ronan Smith 
  */
 
-package src;
+package src.src;
 
 
 public class Person {
