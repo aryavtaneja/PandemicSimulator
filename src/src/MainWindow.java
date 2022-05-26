@@ -5,32 +5,32 @@
 
 package src.src;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JSlider;
-import javax.swing.JCheckBox;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Toolkit;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JButton;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import java.awt.Color;
-import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class MainWindow extends JFrame {
 	
