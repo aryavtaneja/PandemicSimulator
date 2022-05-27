@@ -83,7 +83,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow() {
 		setFont(new Font("Calibri", Font.PLAIN, 12));
-		setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/img/icon.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/src/img/icon.png")));
 		setTitle("Pestilence Corporation - Pandemic Simulator");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 720, 720);
@@ -366,7 +366,7 @@ public class MainWindow extends JFrame {
 		JLabel icon = new JLabel("");
 	    icon.setPreferredSize(new Dimension(250, 250));
 
-		icon.setIcon(new ImageIcon(MainWindow.class.getResource("/img/icon_small.png")));
+		icon.setIcon(new ImageIcon(MainWindow.class.getResource("/src/img/icon_small.png")));
 
 		goodiesMenu.add(icon);
 		Game = new JPanel();
@@ -394,7 +394,7 @@ public class MainWindow extends JFrame {
 		
 		JLabel worldBackground = new JLabel("");
 		worldBackground.setBounds(0, 11, 676, 544);
-		worldBackground.setIcon(new ImageIcon(MainWindow.class.getResource("/img/back.png")));
+		worldBackground.setIcon(new ImageIcon(MainWindow.class.getResource("/src/img/back.png")));
 		mainGame.setLayout(null);
 		mainGame.add(fastForward);
 		mainGame.add(worldBackground);
