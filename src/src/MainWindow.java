@@ -196,7 +196,7 @@ public class MainWindow extends JFrame {
 		updateSettings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean[] sus = {infantBox.isSelected(), youthBox.isSelected(), adultBox.isSelected(), boomerBox.isSelected()};
-				game.updateSus(sus);				
+				game.updateSus(sus);
 			}
 		});
 		updateSettings.setVerticalAlignment(SwingConstants.BOTTOM);

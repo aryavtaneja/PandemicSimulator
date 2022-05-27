@@ -1,6 +1,7 @@
 /**
  * Defines class for a person in the simulator
  * @author Daniel Welicki
+ * @author Aryav Taneja
  * @author Joshua Wu
  * @author Ronan Smith
  * @author Ethan Hu
@@ -24,23 +25,54 @@ public class Person {
     */
    
    private int age;
+   private int ageInYears;
+   private int ageCategory;
    private boolean preCondition;
+
+   public boolean isSusceptible() {
+      return susceptible;
+   }
+
+   public boolean isInfected() {
+      return infected;
+   }
+
+   public boolean isDead() {
+      return dead;
+   }
+
+   public boolean isRecovered() {
+      return recovered;
+   }
+
    private boolean susceptible;
    private boolean infected;
    private boolean dead;
+   private boolean recovered;
    private int incubation;
    private int resistance;
    private double mortality;
 
    public Person() {
       this.age = (int) (Math.random() * 29199);
+      this.ageInYears = (int) Math.floor(age / 365);
       this.preCondition = (Math.random() > 0.95);
       this.infected = false;
       this.susceptible = true;
-      this.infected = false;
+      this.recovered = false;
       this.dead = false;
       this.incubation = 0;
       this.resistance = 0;
+
+      if (0 <= ageInYears && ageInYears < 5) {
+         this.ageCategory = 0;
+      } else if (5 <= ageInYears && ageInYears < 18) {
+         this.ageCategory = 1;
+      } else if (18 <= ageInYears && ageInYears < 65) {
+         this.ageCategory = 2;
+      } else {
+         this.ageCategory = 3;
+      }
    }
 
    /**
@@ -50,20 +82,17 @@ public class Person {
     * @param virus The virus that the person is infected with
     */
    public void closeContact(Virus virus) {
-      if (infected || dead || !susceptible) {
-         return;
-      }
       int rand = (int) ((Math.random() * 99) + 1);
       if (rand <= virus.getInfectability() * 100) {
          incubation = virus.getIncubation();
          resistance = virus.getResistance();
-         calcMortality(virus.getMortality());
+         calcMortality(virus);
          this.infected = true;
-         Day.addTotalCases(1);
       }
    }
 
-   public void calcMortality(double rate) {
+   public void calcMortality(Virus virus) {
+      double rate = virus.getMortality();
       mortality = preCondition ? rate * 2 : rate;
    }
 
@@ -93,7 +122,7 @@ public class Person {
             resistance--;
             if (resistance == 0) {
                this.susceptible = false;
-               Day.addTotalRecoveries(1);
+               this.recovered = true;
             }
          }
       }
@@ -102,10 +131,9 @@ public class Person {
    }
 
    public void die() {
+      this.recovered = false;
       this.infected = false;
       this.dead = true;
       this.susceptible = false;
-      Day.addTotalCases(-1);
-      Day.addTotalDeaths(1);
    }
 }

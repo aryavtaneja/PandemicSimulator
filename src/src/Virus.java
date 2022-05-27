@@ -36,9 +36,8 @@ public class Virus {
     private int incubation;
     private int resistance;
     
-    public Virus() {
-    	
-    }
+    public Virus() {}
+    
     public Virus(double infectability, double mortality, boolean[] susceptibilities, int incubation, int resistance) {
         this.infectability = infectability;
         this.mortality = mortality;

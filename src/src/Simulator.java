@@ -11,8 +11,9 @@ import java.util.*;
 public class Simulator {
     private Person[] population = new Person[500];
     private ArrayList<Person> susceptiblePeople = new ArrayList<Person>(); 
-    private ArrayList<Person> infected = new ArrayList<Person>(); 
-    private ArrayList<Person> dead = new ArrayList<Person>();
+    private ArrayList<Person> infectedPeople = new ArrayList<Person>(); 
+    private ArrayList<Person> deadPeople = new ArrayList<Person>();
+	private ArrayList<Person> recoveredPeople = new ArrayList<Person>();
     private ArrayList <Day> dayData = new ArrayList<>();
     private Virus gameVirus = new Virus();
     
@@ -23,7 +24,7 @@ public class Simulator {
          }
 
          int patientZero = (int)(Math.random() * 500); 
-         infected.add(population[patientZero]); 
+         infectedPeople.add(population[patientZero]); 
 
          for (int i = 0; i < population.length; i++) {
              if (i != patientZero) {
@@ -31,6 +32,25 @@ public class Simulator {
              }
          }	
     }
+
+	public void refreshArrayLists() {
+		susceptiblePeople.clear();
+		infectedPeople.clear();
+		deadPeople.clear();
+		recoveredPeople.clear();
+
+		for (int i = 0; i < population.length; i++) {
+			if (population[i].isSusceptible()) {
+				susceptiblePeople.add(population[i]);
+			} else if (population[i].isInfected()) {
+				infectedPeople.add(population[i]);
+			} else if (population[i].isDead()) {
+				deadPeople.add(population[i]);
+			} else {
+				recoveredPeople.add(population[i]);
+			}
+		}
+	}
    
     public void updateInfectability(int infectability) {
 		gameVirus.setInfectability(infectability / 10.0);
@@ -50,10 +70,32 @@ public class Simulator {
 	public void updateName(String name) {
 		gameVirus.setName(name);
 	}
+
 	public Day simulate() {
+		int casesAtStart = infectedPeople.size();
+		int deathsAtStart = deadPeople.size();
+		int recoveriesAtStart = recoveredPeople.size();
+		
+		int numberToContact = (12 * infectedPeople.size()) > infectedPeople.size() ? 12 * infectedPeople.size() : infectedPeople.size();
+
+		for (int i = 0; i < numberToContact; i++) {
+			int randomPersonIndex = (int) (Math.random() * susceptiblePeople.size());
+			susceptiblePeople.get(randomPersonIndex).closeContact(gameVirus);
+			refreshArrayLists();
+		}
+
+		for (Person person : population) {
+			person.update();
+		}
+
+		refreshArrayLists();
+
+		int deltaCases = infectedPeople.size() - casesAtStart;
+		int deltaDeaths = deadPeople.size() - deathsAtStart;
+		int deltaRecoveries = recoveredPeople.size() - recoveriesAtStart;
+
 		// Once the methods that do the math are coded, replace each parameter with it's corresponding operation. 
-		dayData.add(new Day(dayData.size(), 0, 0,0, 0));
-		Day currentDay = dayData.get(dayData.size() - 2);
+		dayData.add(new Day(dayData.size(), deltaCases, deltaDeaths, deltaRecoveries, susceptiblePeople.size()));
 		return dayData.get(dayData.size() - 2);
 	}
 }
