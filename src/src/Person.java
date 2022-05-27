@@ -53,13 +53,13 @@ public class Person {
       if (infected || dead || !susceptible) {
          return;
       }
-      this.infected = true;
       int rand = (int) ((Math.random() * 99) + 1);
       if (rand <= virus.getInfectability() * 100) {
          incubation = virus.getIncubation();
          resistance = virus.getResistance();
          calcMortality(virus.getMortality());
-
+         this.infected = true;
+         Day.addTotalCases(1);
       }
    }
 
@@ -93,6 +93,7 @@ public class Person {
             resistance--;
             if (resistance == 0) {
                this.susceptible = false;
+               Day.addTotalRecoveries(1);
             }
          }
       }
@@ -104,5 +105,7 @@ public class Person {
       this.infected = false;
       this.dead = true;
       this.susceptible = false;
+      Day.addTotalCases(-1);
+      Day.addTotalDeaths(1);
    }
 }

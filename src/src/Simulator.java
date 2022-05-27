@@ -54,9 +54,23 @@ public class Simulator {
 		// Once the methods that do the math are coded, replace each parameter with it's corresponding operation. 
 		dayData.add(new Day(dayData.size(), 0, 0,0, 0));
 		Day currentDay = dayData.get(dayData.size() - 2);
-		Day.addTotalCases(currentDay.cases());
-		Day.addTotalDeaths(currentDay.deaths());
-		Day.addTotalRecoveries(currentDay.recoveries());
 		return dayData.get(dayData.size() - 2);
 	}
+   public int[] progressDay() {
+      for(int person = 0; person < population.length; person++) {
+         for(int contact = 0; contact < 12; contact++) {
+            int otherPerson = (int) (Math.random() * population.length())
+            if((person.infected) && !(otherPerson.infected)) {
+               otherPerson.closeContact(gameVirus);
+            }
+            if(!(person.infected) && (otherPerson.infected)) {
+               otherPerson.closeContact(gameVirus);
+            }
+         }
+      }
+      for(int person = 0; person < population.length; person++) {
+         person.update();
+      }
+   return {Day.totalCases(), Day.totalDeaths(), Day.totalRecoveries()}
+   }
 }
