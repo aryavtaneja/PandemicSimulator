@@ -6,6 +6,7 @@
 package src;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -19,7 +20,6 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-<<<<<<< HEAD
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -30,10 +30,8 @@ import javax.swing.JButton;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.JMenuBar;
-=======
 import javax.swing.JFrame;
 import javax.swing.JLabel;
->>>>>>> 0550d4ff0c207cd18524cb54c4c6b645b7d667d8
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -41,17 +39,14 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
-<<<<<<< HEAD
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
 import javax.swing.DropMode;
-=======
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
->>>>>>> 0550d4ff0c207cd18524cb54c4c6b645b7d667d8
 
 public class MainWindow extends JFrame {
 	
@@ -234,9 +229,7 @@ public class MainWindow extends JFrame {
 		diseaseConfig.add(configMenu);
 		
 		
-		JButton fastForward = new JButton();
-		fastForward.setBounds(215, 566, 200, 37);
-		fastForward.setFont(new Font("Calibri", Font.PLAIN, 14));
+		
 		
 		JMenu mnNewMenu = new JMenu("Simulation State");
 		configMenu.add(mnNewMenu);
@@ -245,12 +238,18 @@ public class MainWindow extends JFrame {
 		mnNewMenu.add(endSimulation);
 		
 		JButton restartSimulation = new JButton("Restart Simulation");
+		restartSimulation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		mnNewMenu.add(restartSimulation);
 		
 		JMenu ffConfig = new JMenu("Fast Forward Config");
 		configMenu.add(ffConfig);
 		
-		
+		JButton fastForward = new JButton();
+
 		JLabel daysLabel = new JLabel("Days to Forward");
 		ffConfig.add(daysLabel);
 		daysLabel.setFont(new Font("Calibri", Font.PLAIN, 11));
@@ -294,72 +293,82 @@ public class MainWindow extends JFrame {
 		JMenu infectivityDropdown = new JMenu("Infectivity");
 		variablesMenu.add(infectivityDropdown);
 		
-		JTextArea welcome_1 = new JTextArea();
-		welcome_1.setWrapStyleWord(true);
-		welcome_1.setText("The probability that a person who interacts with an infected person also gets infected.  Based on a scale of 1-10, with 10 being the greatest.");
-		welcome_1.setLineWrap(true);
-		welcome_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		welcome_1.setEditable(false);
-		welcome_1.setDropMode(DropMode.INSERT);
-		welcome_1.setColumns(2);
-		welcome_1.setBounds(new Rectangle(0, 0, 200, 250));
-		infectivityDropdown.add(welcome_1);
+		JTextArea infectivityText = new JTextArea();
+		infectivityText.setWrapStyleWord(true);
+		infectivityText.setText("The probability that a person who interacts with an infected person also gets infected.  Based on a scale of 1-10, with 10 being the greatest.");
+		infectivityText.setLineWrap(true);
+		infectivityText.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		infectivityText.setEditable(false);
+		infectivityText.setDropMode(DropMode.INSERT);
+		infectivityText.setColumns(2);
+		infectivityText.setBounds(new Rectangle(0, 0, 200, 250));
+		infectivityDropdown.add(infectivityText);
 		
 		JMenu mortalityDropdown = new JMenu("Mortality");
 		variablesMenu.add(mortalityDropdown);
 		
-		JTextArea welcome_2 = new JTextArea();
-		welcome_2.setWrapStyleWord(true);
-		welcome_2.setText("A modifier for how lethal the disease is, although final chance of death is also a factor of age group and preexisting conditions. Based on a scale of 1-10, with 10 being the greatest.");
-		welcome_2.setLineWrap(true);
-		welcome_2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		welcome_2.setEditable(false);
-		welcome_2.setDropMode(DropMode.INSERT);
-		welcome_2.setColumns(2);
-		welcome_2.setBounds(new Rectangle(0, 0, 200, 250));
-		mortalityDropdown.add(welcome_2);
+		JTextArea mortalityText = new JTextArea();
+		mortalityText.setWrapStyleWord(true);
+		mortalityText.setText("A modifier for how lethal the disease is, although final chance of death is also a factor of age group and preexisting conditions. Based on a scale of 1-10, with 10 being the greatest.");
+		mortalityText.setLineWrap(true);
+		mortalityText.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		mortalityText.setEditable(false);
+		mortalityText.setDropMode(DropMode.INSERT);
+		mortalityText.setColumns(2);
+		mortalityText.setBounds(new Rectangle(0, 0, 200, 250));
+		mortalityDropdown.add(mortalityText);
 		
 		JMenu susDropdown = new JMenu("Susceptibilities ");
 		variablesMenu.add(susDropdown);
 		
-		JTextArea txtrWhichAgeGroups = new JTextArea();
-		txtrWhichAgeGroups.setWrapStyleWord(true);
-		txtrWhichAgeGroups.setText("Which age groups (children, adults, seniors) are more susceptible to the disease than others. Multiple are possible (i.e. children and seniors), so check off all groups that are susceptible to infection. ");
-		txtrWhichAgeGroups.setLineWrap(true);
-		txtrWhichAgeGroups.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		txtrWhichAgeGroups.setEditable(false);
-		txtrWhichAgeGroups.setDropMode(DropMode.INSERT);
-		txtrWhichAgeGroups.setColumns(2);
-		txtrWhichAgeGroups.setBounds(new Rectangle(0, 0, 200, 250));
-		susDropdown.add(txtrWhichAgeGroups);
+		JTextArea susText = new JTextArea();
+		susText.setWrapStyleWord(true);
+		susText.setText("Which age groups (children, adults, seniors) are more susceptible to the disease than others. Multiple are possible (i.e. children and seniors), so check off all groups that are susceptible to infection. ");
+		susText.setLineWrap(true);
+		susText.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		susText.setEditable(false);
+		susText.setDropMode(DropMode.INSERT);
+		susText.setColumns(2);
+		susText.setBounds(new Rectangle(0, 0, 200, 250));
+		susDropdown.add(susText);
 		
 		JMenu incubationDropdown = new JMenu("Incubation Period");
 		variablesMenu.add(incubationDropdown);
 		
-		JTextArea txtrTheNumberOf = new JTextArea();
-		txtrTheNumberOf.setWrapStyleWord(true);
-		txtrTheNumberOf.setText("The number of days which the virus incubates in an infected person. The person is able to spread the disease in this time, but isn't able to die during this time. Based on a scale of 1-31 days.\r\n");
-		txtrTheNumberOf.setLineWrap(true);
-		txtrTheNumberOf.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		txtrTheNumberOf.setEditable(false);
-		txtrTheNumberOf.setDropMode(DropMode.INSERT);
-		txtrTheNumberOf.setColumns(2);
-		txtrTheNumberOf.setBounds(new Rectangle(0, 0, 200, 250));
-		incubationDropdown.add(txtrTheNumberOf);
+		JTextArea incubationText = new JTextArea();
+		incubationText.setWrapStyleWord(true);
+		incubationText.setText("The number of days which the virus incubates in an infected person. The person is able to spread the disease in this time, but isn't able to die during this time. Based on a scale of 1-31 days.\r\n");
+		incubationText.setLineWrap(true);
+		incubationText.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		incubationText.setEditable(false);
+		incubationText.setDropMode(DropMode.INSERT);
+		incubationText.setColumns(2);
+		incubationText.setBounds(new Rectangle(0, 0, 200, 250));
+		incubationDropdown.add(incubationText);
 		
 		JMenu resistanceDropdown = new JMenu("Resistance Period");
 		variablesMenu.add(resistanceDropdown);
 		
-		JTextArea txtrTheNumberOf_1 = new JTextArea();
-		txtrTheNumberOf_1.setWrapStyleWord(true);
-		txtrTheNumberOf_1.setText("The number of days that the person \"feels symptoms\" and is able to die. Every day of this period, they have a chance of death based on mortality, age and preexisting conditions. If they survive these many days, they are considered recovered and cannot be infected again. Based on a scale of 1-10, with 10 being the greatest.");
-		txtrTheNumberOf_1.setLineWrap(true);
-		txtrTheNumberOf_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		txtrTheNumberOf_1.setEditable(false);
-		txtrTheNumberOf_1.setDropMode(DropMode.INSERT);
-		txtrTheNumberOf_1.setColumns(2);
-		txtrTheNumberOf_1.setBounds(new Rectangle(0, 0, 200, 250));
-		resistanceDropdown.add(txtrTheNumberOf_1);
+		JTextArea resistanceText = new JTextArea();
+		resistanceText.setWrapStyleWord(true);
+		resistanceText.setText("The number of days that the person \"feels symptoms\" and is able to die. Every day of this period, they have a chance of death based on mortality, age and preexisting conditions. If they survive these many days, they are considered recovered and cannot be infected again. Based on a scale of 1-10, with 10 being the greatest.");
+		resistanceText.setLineWrap(true);
+		resistanceText.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		resistanceText.setEditable(false);
+		resistanceText.setDropMode(DropMode.INSERT);
+		resistanceText.setColumns(2);
+		resistanceText.setBounds(new Rectangle(0, 0, 200, 250));
+		resistanceDropdown.add(resistanceText);
+		
+		JMenu goodiesMenu = new JMenu("Goodies ");
+		helpMenu.add(goodiesMenu);
+		
+		JLabel icon = new JLabel("");
+	    icon.setPreferredSize(new Dimension(250, 250));
+
+		icon.setIcon(new ImageIcon(MainWindow.class.getResource("/img/icon_small.png")));
+
+		goodiesMenu.add(icon);
 		Game = new JPanel();
 		Game.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(Game);
@@ -381,30 +390,68 @@ public class MainWindow extends JFrame {
 					.addComponent(mainGame, GroupLayout.PREFERRED_SIZE, 627, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(22, Short.MAX_VALUE))
 		);
-		JButton nextDayButton = new JButton();
-		nextDayButton.setBounds(10, 566, 195, 37);
-		nextDayButton.setText("Next Day");
-		nextDayButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		nextDayButton.setFont(new Font("Calibri", Font.PLAIN, 14));
+		
 		
 		JLabel worldBackground = new JLabel("");
 		worldBackground.setBounds(0, 11, 676, 544);
 		worldBackground.setIcon(new ImageIcon(MainWindow.class.getResource("/img/back.png")));
 		mainGame.setLayout(null);
-		mainGame.add(nextDayButton);
 		mainGame.add(fastForward);
 		mainGame.add(worldBackground);
 		
-		JTextArea txtrWelcomeToPestilence = new JTextArea();
-		txtrWelcomeToPestilence.setFont(new Font("Franklin Gothic Book", Font.PLAIN, 13));
-		txtrWelcomeToPestilence.setLineWrap(true);
-		txtrWelcomeToPestilence.setText("Welcome to Pestilence Corporation. Craft your disease by going  to the Options, and let the infection begin. ");
-		txtrWelcomeToPestilence.setOpaque(false);
-		txtrWelcomeToPestilence.setBounds(10, 60, 663, 495);
-		mainGame.add(txtrWelcomeToPestilence);
+		JTextArea gameText = new JTextArea();
+		gameText.setWrapStyleWord(true);
+		gameText.setFont(new Font("Franklin Gothic Book", Font.PLAIN, 25));
+		gameText.setLineWrap(true);
+		gameText.setText("Welcome to Pestilence Corporation. Craft your disease by going  to the Options, and let the infection begin. ");
+		gameText.setOpaque(false);
+		gameText.setBounds(33, 89, 620, 384);
+		gameText.setEditable(false);
+		mainGame.add(gameText);
 		Game.setLayout(gl_Game);
+		
+		JButton nextDayButton = new JButton();
+		nextDayButton.setFont(new Font("Calibri", Font.PLAIN, 14));
+		mainGame.add(nextDayButton);
+		nextDayButton.setBounds(97, 566, 200, 37);
+		nextDayButton.setText("Start Simulation (Day 0)");
+		nextDayButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				nextDayButton.setText("Next Day");
+				Day currentDay = game.simulate();
+
+				setTitle("Pestilence Corporation - Day " + currentDay.dayNumber());
+				gameText.setText(
+						" Day " + currentDay.dayNumber() + 
+						"\n New cases: " + currentDay.cases() +
+						"\n Total recoveries: " + currentDay.recoveries() +
+						"\n Susceptible people: " + currentDay.sus() +
+						"\n Total cases: " + Day.totalCases() +
+						"\n Total deaths: " + Day.totalDeaths()+
+						"\n Total recoveries: " + Day.totalRecoveries()
+						);
+			}
+		});
+		
+		fastForward.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Day currentDay = null;
+				for(int i = 0; i < advance.getValue(); i++) {	
+					currentDay = game.simulate();
+				}
+				setTitle("Pestilence Corporation - Day " + currentDay.dayNumber());
+				gameText.setText(
+						" Day " + currentDay.dayNumber() + 
+						"\n New cases: " + currentDay.cases() +
+						"\n Total recoveries: " + currentDay.recoveries() +
+						"\n Susceptible people: " + currentDay.sus() +
+						"\n Total cases: " + Day.totalCases() +
+						"\n Total deaths: " + Day.totalDeaths()+
+						"\n Total recoveries: " + Day.totalRecoveries()
+						);
+			}
+		});
+		fastForward.setBounds(360, 566, 200, 37);
+		fastForward.setFont(new Font("Calibri", Font.PLAIN, 14));
 	}
 }

@@ -13,9 +13,11 @@ public class Simulator {
     private ArrayList<Person> susceptiblePeople = new ArrayList<Person>(); 
     private ArrayList<Person> infected = new ArrayList<Person>(); 
     private ArrayList<Person> dead = new ArrayList<Person>();
+    private ArrayList <Day> dayData = new ArrayList<>();
     private Virus gameVirus = new Virus();
     
     public Simulator() {
+    	 dayData.add(new Day(0, 1, 0, 0, 0));
     	 for (int i = 0; i < population.length; i++) {
              population[i] = new Person();
          }
@@ -47,5 +49,14 @@ public class Simulator {
 	}
 	public void updateName(String name) {
 		gameVirus.setName(name);
+	}
+	public Day simulate() {
+		// Once the methods that do the math are coded, replace each parameter with it's corresponding operation. 
+		dayData.add(new Day(dayData.size(), 0, 0,0, 0));
+		Day currentDay = dayData.get(dayData.size() - 2);
+		Day.addTotalCases(currentDay.cases());
+		Day.addTotalDeaths(currentDay.deaths());
+		Day.addTotalRecoveries(currentDay.recoveries());
+		return dayData.get(dayData.size() - 2);
 	}
 }
