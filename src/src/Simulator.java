@@ -56,21 +56,5 @@ public class Simulator {
 		Day currentDay = dayData.get(dayData.size() - 2);
 		return dayData.get(dayData.size() - 2);
 	}
-   public int[] progressDay() {
-      for(int person = 0; person < population.length; person++) {
-         for(int contact = 0; contact < 12; contact++) {
-            int otherPerson = (int) (Math.random() * population.length())
-            if((person.infected) && !(otherPerson.infected)) {
-               otherPerson.closeContact(gameVirus);
-            }
-            if(!(person.infected) && (otherPerson.infected)) {
-               otherPerson.closeContact(gameVirus);
-            }
-         }
-      }
-      for(int person = 0; person < population.length; person++) {
-         person.update();
-      }
-   return {Day.totalCases(), Day.totalDeaths(), Day.totalRecoveries()}
-   }
 }
+
