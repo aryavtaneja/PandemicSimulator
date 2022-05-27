@@ -5,7 +5,7 @@
  * @author Aryav Taneja 
  */
 
-package src;
+package src.src;
 import java.util.*; 
 
 public class Simulator {
