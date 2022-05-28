@@ -18,19 +18,15 @@ public class Simulator {
     private Virus gameVirus = new Virus();
     
     public Simulator() {
-    	 dayData.add(new Day(0, 1, 0, 0, 0));
-    	 for (int i = 0; i < population.length; i++) {
-             population[i] = new Person();
-         }
+		for (int i = 0; i < population.length; i++) {
+			population[i] = new Person();
+		}
 
-         int patientZero = (int)(Math.random() * 500); 
-         infectedPeople.add(population[patientZero]); 
+		int patientZeroIndex = (int)(Math.random() * 500); 
+		population[patientZeroIndex].hardInfect(gameVirus);
 
-         for (int i = 0; i < population.length; i++) {
-             if (i != patientZero) {
-                 susceptiblePeople.add(population[i]); 
-             }
-         }	
+		refreshArrayLists();
+		dayData.add(new Day(1, 1, 0, 0, 0));
     }
 
 	public void refreshArrayLists() {
@@ -75,8 +71,13 @@ public class Simulator {
 		int casesAtStart = infectedPeople.size();
 		int deathsAtStart = deadPeople.size();
 		int recoveriesAtStart = recoveredPeople.size();
-		
-		int numberToContact = (12 * infectedPeople.size()) > infectedPeople.size() ? 12 * infectedPeople.size() : infectedPeople.size();
+		int numberToContact;
+
+		if ((12 * infectedPeople.size()) > susceptiblePeople.size() || susceptiblePeople.size() < (12 * infectedPeople.size())) {
+			numberToContact = susceptiblePeople.size();
+		} else {
+			numberToContact = 12 * infectedPeople.size();
+		}
 
 		for (int i = 0; i < numberToContact; i++) {
 			int randomPersonIndex = (int) (Math.random() * susceptiblePeople.size());

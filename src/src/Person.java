@@ -87,8 +87,17 @@ public class Person {
          incubation = virus.getIncubation();
          resistance = virus.getResistance();
          calcMortality(virus);
+         this.susceptible = false;
          this.infected = true;
       }
+   }
+
+   public void hardInfect(Virus virus) {
+      incubation = virus.getIncubation();
+      resistance = virus.getResistance();
+      calcMortality(virus);
+      this.susceptible = false;
+      this.infected = true;
    }
 
    public void calcMortality(Virus virus) {

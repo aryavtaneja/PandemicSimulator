@@ -89,5 +89,4 @@ public class Virus {
 	public void setResistance(int resistance) {
 		this.resistance = resistance;
 	}
-
 }
