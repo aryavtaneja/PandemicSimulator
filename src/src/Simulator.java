@@ -97,6 +97,9 @@ public class Simulator {
 
 		// Once the methods that do the math are coded, replace each parameter with it's corresponding operation. 
 		dayData.add(new Day(dayData.size(), deltaCases, deltaDeaths, deltaRecoveries, susceptiblePeople.size()));
+		Day.addTotalCases(deltaCases);
+		Day.addTotalDeaths(deltaDeaths);
+		Day.addTotalRecoveries(deltaRecoveries);
 		return dayData.get(dayData.size() - 2);
 	}
 }

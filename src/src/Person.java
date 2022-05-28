@@ -25,9 +25,9 @@ public class Person {
     */
    
    private int age;
-   private int ageInYears;
-   private int ageCategory;
-   private boolean preCondition;
+   //private int ageInYears;
+   //private int ageCategory;
+   //private boolean preCondition;
 
    public boolean isSusceptible() {
       return susceptible;
@@ -55,15 +55,15 @@ public class Person {
 
    public Person() {
       this.age = (int) (Math.random() * 29199);
-      this.ageInYears = (int) Math.floor(age / 365);
-      this.preCondition = (Math.random() > 0.95);
+      //this.ageInYears = (int) Math.floor(age / 365);
+      //this.preCondition = (Math.random() > 0.95);
       this.infected = false;
       this.susceptible = true;
       this.recovered = false;
       this.dead = false;
       this.incubation = 0;
       this.resistance = 0;
-
+       /** 
       if (0 <= ageInYears && ageInYears < 5) {
          this.ageCategory = 0;
       } else if (5 <= ageInYears && ageInYears < 18) {
@@ -73,6 +73,7 @@ public class Person {
       } else {
          this.ageCategory = 3;
       }
+      */
    }
 
    /**
@@ -102,7 +103,8 @@ public class Person {
 
    public void calcMortality(Virus virus) {
       double rate = virus.getMortality();
-      mortality = preCondition ? rate * 2 : rate;
+      //mortality = preCondition ? rate * 2 : rate;
+      mortality = rate;
    }
 
    /**
@@ -123,8 +125,7 @@ public class Person {
             incubation--;
          }
          if (incubation == 0) {
-            int rand = (int) ((Math.random() * 99) + 1);
-            if (rand <= mortality * 100) {
+            if ((Math.random())<= mortality) {
                die();
                return;
             }
