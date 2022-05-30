@@ -84,19 +84,20 @@ public class Person {
    public void closeContact(Virus virus) {
       int rand = (int) ((Math.random() * 99) + 1);
       if (rand <= virus.getInfectability() * 100) {
-    	  
-    	 this.mortality = virus.getMortality();
+         this.mortality = virus.getMortality();
          this.susceptible = false;
          this.infected = true;
          this.incubation = virus.getIncubation();
+         this.resistance = virus.getResistance();
+         System.out.println(this.incubation + " " + this.resistance);
       }
    }
 
    public void hardInfect(Virus virus) {
       this.incubation = virus.getIncubation();
-      System.out.println(this.incubation);
       this.resistance = virus.getResistance();
       this.mortality = virus.getMortality();
+      System.out.println(this.incubation + " " + this.resistance);
       this.susceptible = false;
       this.infected = true;
    }
