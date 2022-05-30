@@ -34,16 +34,16 @@ public class Simulator {
 		infectedPeople.clear();
 		deadPeople.clear();
 		recoveredPeople.clear();
-
-		for (int i = 0; i < population.length; i++) {
-			if (population[i].isSusceptible()) {
-				susceptiblePeople.add(population[i]);
-			} else if (population[i].isInfected()) {
-				infectedPeople.add(population[i]);
-			} else if (population[i].isDead()) {
-				deadPeople.add(population[i]);
+		
+		for(Person p : population) {
+			if (p.isSusceptible()) {
+				susceptiblePeople.add(p);
+			} else if (p.isInfected()) {
+				infectedPeople.add(p);
+			} else if (p.isDead()) {
+				deadPeople.add(p);
 			} else {
-				recoveredPeople.add(population[i]);
+				recoveredPeople.add(p);
 			}
 		}
 	}
@@ -69,6 +69,7 @@ public class Simulator {
 	}
 
 	public Day simulate() {
+		System.out.println("Virus incubation: " + gameVirus.getIncubation() + ", Virus resistance: " + gameVirus.getResistance());
 		int casesAtStart = infectedPeople.size();
 		int deathsAtStart = deadPeople.size();
 		int recoveriesAtStart = recoveredPeople.size();

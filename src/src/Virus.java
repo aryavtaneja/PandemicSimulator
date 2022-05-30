@@ -2,6 +2,7 @@
  * Defines class for a virus in the simulator
  * @author Ethan Hu
  * @author Aryav Taneja
+ * @author Daniel Welicki
  */
 
 package src;
@@ -38,13 +39,6 @@ public class Virus {
     
     public Virus() {}
     
-    public Virus(double infectability, double mortality, boolean[] susceptibilities, int incubation, int resistance) {
-        this.infectability = infectability;
-        this.mortality = mortality;
-        this.susceptibilities = susceptibilities;
-        this.incubation = incubation;
-        this.resistance = resistance;
-    }
 
     public double getInfectability() {
         return infectability;
@@ -82,6 +76,7 @@ public class Virus {
 
 	public void setIncubation(int incubation) {
 		System.out.println("inc " + incubation);
+		this.incubation = incubation;
 	}
 	public void setName(String name) {
 		this.name = name;

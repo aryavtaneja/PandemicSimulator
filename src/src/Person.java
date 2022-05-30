@@ -121,7 +121,9 @@ public class Person {
 
       if (infected && !dead) {
          if (incubation > 0) {
+        	 
             incubation--;
+
          }
         
          if (incubation == 0) {
@@ -133,7 +135,7 @@ public class Person {
            
          }
          this.resistance--;
-         System.out.println("resistance " + resistance);
+         
          if (resistance <= 0) {
             this.susceptible = false;
             this.recovered = true;
