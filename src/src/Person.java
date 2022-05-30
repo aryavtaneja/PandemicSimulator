@@ -85,8 +85,7 @@ public class Person {
    public void closeContact(Virus virus) {
       int rand = (int) ((Math.random() * 99) + 1);
       if (rand <= virus.getInfectability() * 100) {
-         incubation = virus.getIncubation();
-         resistance = virus.getResistance();
+ 
          calcMortality(virus);
          this.susceptible = false;
          this.infected = true;
@@ -115,10 +114,10 @@ public class Person {
          return;
       }
 
-      if (age >= 29200) {
-         die();
-         return;
-      }
+//      if (age >= 29200) {
+//         die();
+//         return;
+//      }
 
       if (infected && !dead) {
          if (incubation > 0) {

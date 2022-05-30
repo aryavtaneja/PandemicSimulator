@@ -26,7 +26,7 @@ public class Simulator {
 		population[patientZeroIndex].hardInfect(gameVirus);
 
 		refreshArrayLists();
-		dayData.add(new Day(0, 1, 0, 0, susceptiblePeople.size()));
+		dayData.add(new Day(dayData.size() + 1, infectedPeople.size(), 0, 0, susceptiblePeople.size()));
     }
 
 	public void refreshArrayLists() {
@@ -53,7 +53,7 @@ public class Simulator {
 	}
 	public void updateMortality(int mortality) {
 	
-		gameVirus.setMortality(mortality / 10.0 );
+		gameVirus.setMortality(mortality/ 10.0 );
 	}
 	public void updateSus(boolean[] sus) {
 		gameVirus.setSusceptibilities(sus);
@@ -93,11 +93,14 @@ public class Simulator {
 		refreshArrayLists();
 
 		int deltaCases = infectedPeople.size() - casesAtStart;
+        if (deltaCases < 0) {
+            deltaCases = 0;
+        }
 		int deltaDeaths = deadPeople.size() - deathsAtStart;
 		int deltaRecoveries = recoveredPeople.size() - recoveriesAtStart;
 
 		// Once the methods that do the math are coded, replace each parameter with it's corresponding operation. 
-		dayData.add(new Day(dayData.size(), deltaCases, deltaDeaths, deltaRecoveries, susceptiblePeople.size()));
+		dayData.add(new Day(dayData.size() + 1, deltaCases, deltaDeaths, deltaRecoveries, susceptiblePeople.size()));
 		Day.addTotalCases(deltaCases);
 		Day.addTotalDeaths(deltaDeaths);
 		Day.addTotalRecoveries(deltaRecoveries);
