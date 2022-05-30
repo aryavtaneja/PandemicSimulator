@@ -75,7 +75,6 @@ public class Virus {
 	}
 
 	public void setIncubation(int incubation) {
-		System.out.println("inc " + incubation);
 		this.incubation = incubation;
 	}
 	public void setName(String name) {

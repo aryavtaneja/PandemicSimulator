@@ -61,8 +61,7 @@ public class Person {
       this.susceptible = true;
       this.recovered = false;
       this.dead = false;
-      this.incubation = 0;
-      this.resistance = 0;
+
        /** 
       if (0 <= ageInYears && ageInYears < 5) {
          this.ageCategory = 0;
@@ -85,25 +84,27 @@ public class Person {
    public void closeContact(Virus virus) {
       int rand = (int) ((Math.random() * 99) + 1);
       if (rand <= virus.getInfectability() * 100) {
- 
-         calcMortality(virus);
+    	  
+    	 this.mortality = virus.getMortality();
          this.susceptible = false;
          this.infected = true;
+         this.incubation = virus.getIncubation();
       }
    }
 
    public void hardInfect(Virus virus) {
-      incubation = virus.getIncubation();
-      resistance = virus.getResistance();
-      calcMortality(virus);
+      this.incubation = virus.getIncubation();
+      System.out.println(this.incubation);
+      this.resistance = virus.getResistance();
+      this.mortality = virus.getMortality();
       this.susceptible = false;
       this.infected = true;
    }
 
    public void calcMortality(Virus virus) {
        
-      //mortality = preCondition ? rate * 2 : rate;
-      this.mortality = virus.getMortality();
+
+      
    }
 
    /**
@@ -121,7 +122,7 @@ public class Person {
 
       if (infected && !dead) {
          if (incubation > 0) {
-        	 
+        	System.out.println("inc " + incubation);
             incubation--;
 
          }
