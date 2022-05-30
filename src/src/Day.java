@@ -1,4 +1,4 @@
-package src.src;
+package src;
 
 public record Day(int dayNumber, int cases, int deaths, int recoveries, int sus) {
 	private static int totalCases;

@@ -3,7 +3,7 @@
  * @author Daniel Welicki 
  */
 
-package src.src;
+package src;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -101,6 +101,7 @@ public class MainWindow extends JFrame {
 		optionsMenu.add(resistanceMenu);
 		
 		JSlider resistance = new JSlider();
+		resistance.setMinimum(1);
 		resistance.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				game.updateResistance(resistance.getValue());
@@ -141,6 +142,7 @@ public class MainWindow extends JFrame {
 		optionsMenu.add(mortalityMenu);
 		
 		JSlider mortality = new JSlider();
+		mortality.setMinimum(1);
 		mortality.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				game.updateMortality(mortality.getValue());
@@ -160,6 +162,7 @@ public class MainWindow extends JFrame {
 		optionsMenu.add(diseaseOptions);
 		
 		JSlider infectability = new JSlider();
+		infectability.setMinimum(1);
 		infectability.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				game.updateInfectability(infectability.getValue());
@@ -181,15 +184,19 @@ public class MainWindow extends JFrame {
 		optionsMenu.add(susMenu);
 		
 		JCheckBox youthBox = new JCheckBox("Youth");
+		youthBox.setSelected(true);
 		susMenu.add(youthBox);
 		
 		JCheckBox infantBox = new JCheckBox("Infant");
+		infantBox.setSelected(true);
 		susMenu.add(infantBox);
 		
 		JCheckBox adultBox = new JCheckBox("Adult");
+		adultBox.setSelected(true);
 		susMenu.add(adultBox);
 		
 		JCheckBox boomerBox = new JCheckBox("Boomer");
+		boomerBox.setSelected(true);
 		susMenu.add(boomerBox);
 		
 		JButton updateSettings = new JButton("Update Settings");

@@ -8,7 +8,7 @@
  */ 
 
 
-package src.src;
+package src;
 
 
 public class Person {
@@ -102,9 +102,9 @@ public class Person {
    }
 
    public void calcMortality(Virus virus) {
-      double rate = virus.getMortality();
+       
       //mortality = preCondition ? rate * 2 : rate;
-      mortality = rate;
+      this.mortality = virus.getMortality();
    }
 
    /**
@@ -120,20 +120,25 @@ public class Person {
          return;
       }
 
-      if (infected) {
+      if (infected && !dead) {
          if (incubation > 0) {
             incubation--;
          }
+        
          if (incubation == 0) {
-            if ((Math.random())<= mortality) {
+        	double rand = Math.random();
+            if (rand <= mortality) {
                die();
                return;
             }
-            resistance--;
-            if (resistance == 0) {
-               this.susceptible = false;
-               this.recovered = true;
-            }
+           
+         }
+         this.resistance--;
+         System.out.println("resistance " + resistance);
+         if (resistance <= 0) {
+            this.susceptible = false;
+            this.recovered = true;
+            this.infected = false;
          }
       }
 

@@ -4,7 +4,7 @@
  * @author Aryav Taneja
  */
 
-package src.src;
+package src;
 
 public class Virus {
 
@@ -81,7 +81,7 @@ public class Virus {
 	}
 
 	public void setIncubation(int incubation) {
-		this.incubation = incubation;
+		System.out.println("inc " + incubation);
 	}
 	public void setName(String name) {
 		this.name = name;

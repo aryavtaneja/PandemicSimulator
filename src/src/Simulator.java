@@ -5,7 +5,7 @@
  * @author Aryav Taneja 
  */
 
-package src.src;
+package src;
 import java.util.*; 
 
 public class Simulator {
@@ -26,7 +26,7 @@ public class Simulator {
 		population[patientZeroIndex].hardInfect(gameVirus);
 
 		refreshArrayLists();
-		dayData.add(new Day(1, 1, 0, 0, 0));
+		dayData.add(new Day(0, 1, 0, 0, susceptiblePeople.size()));
     }
 
 	public void refreshArrayLists() {
@@ -52,6 +52,7 @@ public class Simulator {
 		gameVirus.setInfectability(infectability / 10.0);
 	}
 	public void updateMortality(int mortality) {
+	
 		gameVirus.setMortality(mortality / 10.0 );
 	}
 	public void updateSus(boolean[] sus) {
