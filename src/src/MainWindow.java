@@ -256,6 +256,7 @@ public class MainWindow extends JFrame {
 		configMenu.add(ffConfig);
 		
 		JButton fastForward = new JButton();
+		JButton doubleSpeed = new JButton();
 
 		JLabel daysLabel = new JLabel("Days to Forward");
 		ffConfig.add(daysLabel);
@@ -266,6 +267,7 @@ public class MainWindow extends JFrame {
 		advance.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				fastForward.setText("Forward " + advance.getValue() + " Days");
+				doubleSpeed.setText("Forward " + advance.getValue() * 2 + " Days");
 			}
 		});
 		advance.setMinimum(1);
@@ -420,7 +422,7 @@ public class MainWindow extends JFrame {
 		JButton nextDayButton = new JButton();
 		nextDayButton.setFont(new Font("Calibri", Font.PLAIN, 14));
 		mainGame.add(nextDayButton);
-		nextDayButton.setBounds(97, 566, 200, 37);
+		nextDayButton.setBounds(10, 566, 200, 37);
 		nextDayButton.setText("Start Simulation (Day 0)");
 		nextDayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -464,7 +466,29 @@ public class MainWindow extends JFrame {
 						);
 			}
 		});
-		fastForward.setBounds(360, 566, 200, 37);
+		fastForward.setBounds(236, 565, 200, 37);
 		fastForward.setFont(new Font("Calibri", Font.PLAIN, 14));
+		
+		doubleSpeed.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Day currentDay = null;
+				for(int i = 0; i < advance.getValue() * 2; i++) {	
+					currentDay = game.simulate();
+				}
+				setTitle("Pestilence Corporation - Day " + currentDay.dayNumber());
+				gameText.setText(
+						" Day " + currentDay.dayNumber() + 
+						"\n New cases: " + currentDay.cases() +
+						"\n Total recoveries: " + currentDay.recoveries() +
+						"\n Susceptible people: " + currentDay.sus() +
+						"\n Total cases: " + Day.totalCases() +
+						"\n Total deaths: " + Day.totalDeaths()+
+						"\n Total recoveries: " + Day.totalRecoveries()
+						);
+			}
+		});
+		doubleSpeed.setFont(new Font("Calibri", Font.PLAIN, 14));
+		doubleSpeed.setBounds(458, 565, 200, 37);
+		mainGame.add(doubleSpeed);
 	}
 }
