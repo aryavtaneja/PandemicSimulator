@@ -458,7 +458,7 @@ public class MainWindow extends JFrame {
 				gameText.setText(
 						" Day " + currentDay.dayNumber() + 
 						"\n New cases: " + currentDay.cases() +
-						"\n Total recoveries: " + currentDay.recoveries() +
+						"\n New recoveries: " + currentDay.recoveries() +
 						"\n Susceptible people: " + currentDay.sus() +
 						"\n Total cases: " + Day.totalCases() +
 						"\n Total deaths: " + Day.totalDeaths()+
@@ -479,7 +479,7 @@ public class MainWindow extends JFrame {
 				gameText.setText(
 						" Day " + currentDay.dayNumber() + 
 						"\n New cases: " + currentDay.cases() +
-						"\n Total recoveries: " + currentDay.recoveries() +
+						"\n New recoveries: " + currentDay.recoveries() +
 						"\n Susceptible people: " + currentDay.sus() +
 						"\n Total cases: " + Day.totalCases() +
 						"\n Total deaths: " + Day.totalDeaths()+
