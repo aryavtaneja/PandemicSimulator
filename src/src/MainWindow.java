@@ -445,13 +445,14 @@ public class MainWindow extends JFrame {
 				}
 				setTitle("Pestilence Corporation - Day " + currentDay.dayNumber());
 				gameText.setText(
-						" Day " + currentDay.dayNumber() +
-								"\n New cases: " + currentDay.cases() +
-								"\n Total recoveries: " + currentDay.recoveries() +
-								"\n Susceptible people: " + currentDay.sus() +
-								"\n Total cases: " + Day.totalCases() +
-								"\n Total deaths: " + Day.totalDeaths() +
-								"\n Total recoveries: " + Day.totalRecoveries());
+						" Day " + currentDay.dayNumber() + 
+						"\n New cases: " + currentDay.cases() +
+						"\n New recoveries: " + currentDay.recoveries() +
+						"\n Susceptible people: " + currentDay.sus() +
+						"\n Total cases: " + Day.totalCases() +
+						"\n Total deaths: " + Day.totalDeaths()+
+						"\n Total recoveries: " + Day.totalRecoveries()
+						);
 			}
 		});
 		fastForward.setBounds(236, 565, 200, 37);
@@ -465,13 +466,14 @@ public class MainWindow extends JFrame {
 				}
 				setTitle("Pestilence Corporation - Day " + currentDay.dayNumber());
 				gameText.setText(
-						" Day " + currentDay.dayNumber() +
-								"\n New cases: " + currentDay.cases() +
-								"\n Total recoveries: " + currentDay.recoveries() +
-								"\n Susceptible people: " + currentDay.sus() +
-								"\n Total cases: " + Day.totalCases() +
-								"\n Total deaths: " + Day.totalDeaths() +
-								"\n Total recoveries: " + Day.totalRecoveries());
+						" Day " + currentDay.dayNumber() + 
+						"\n New cases: " + currentDay.cases() +
+						"\n New recoveries: " + currentDay.recoveries() +
+						"\n Susceptible people: " + currentDay.sus() +
+						"\n Total cases: " + Day.totalCases() +
+						"\n Total deaths: " + Day.totalDeaths()+
+						"\n Total recoveries: " + Day.totalRecoveries()
+						);
 			}
 		});
 		doubleSpeed.setFont(new Font("Calibri", Font.PLAIN, 14));
