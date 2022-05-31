@@ -60,7 +60,7 @@ public class MainWindow extends JFrame {
 	private JPanel Game;
 	private JPanel statsScreen;
 	private JTextField diseaseName;
-
+	private int times = 0;
 	/**
 	 * Launch the application.
 	 */
@@ -109,7 +109,7 @@ public class MainWindow extends JFrame {
 			}
 		});
 		resistanceMenu.add(resistance);
-		resistance.setValue(14);
+		resistance.setValue(7);
 		resistance.setPaintTicks(true);
 		resistance.setPaintLabels(true);
 		resistance.setMinorTickSpacing(1);
@@ -130,7 +130,7 @@ public class MainWindow extends JFrame {
 		});
 		incubationPeriodSlider.setMinimum(1);
 		incubationMenu.add(incubationPeriodSlider);
-		incubationPeriodSlider.setValue(0);
+		incubationPeriodSlider.setValue(7);
 		incubationPeriodSlider.setPaintTicks(true);
 		incubationPeriodSlider.setPaintLabels(true);
 		incubationPeriodSlider.setMinorTickSpacing(1);
@@ -424,7 +424,13 @@ public class MainWindow extends JFrame {
 		nextDayButton.setText("Start Simulation (Day 0)");
 		nextDayButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nextDayButton.setText("Next Day");
+				
+				if (times == 0) {
+					nextDayButton.setText("Next Day");
+					game.initPatientZero();
+					times++;
+
+				}
 				Day currentDay = game.simulate();
 
 				setTitle("Pestilence Corporation - Day " + currentDay.dayNumber());

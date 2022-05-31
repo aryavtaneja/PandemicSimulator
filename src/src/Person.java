@@ -89,7 +89,6 @@ public class Person {
          this.infected = true;
          this.incubation = virus.getIncubation();
          this.resistance = virus.getResistance();
-         System.out.println(this.incubation + " " + this.resistance);
       }
    }
 
@@ -97,7 +96,6 @@ public class Person {
       this.incubation = virus.getIncubation();
       this.resistance = virus.getResistance();
       this.mortality = virus.getMortality();
-      System.out.println(this.incubation + " " + this.resistance);
       this.susceptible = false;
       this.infected = true;
    }
@@ -123,7 +121,6 @@ public class Person {
 
       if (infected && !dead) {
          if (incubation > 0) {
-        	System.out.println("inc " + incubation);
             incubation--;
 
          }
@@ -149,6 +146,7 @@ public class Person {
    }
 
    public void die() {
+	  
       this.recovered = false;
       this.infected = false;
       this.dead = true;

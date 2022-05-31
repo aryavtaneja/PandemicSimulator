@@ -16,17 +16,14 @@ public class Simulator {
 	private ArrayList<Person> recoveredPeople = new ArrayList<Person>();
     private ArrayList <Day> dayData = new ArrayList<>();
     private Virus gameVirus = new Virus();
+    private int patientZeroIndex;
     
     public Simulator() {
 		for (int i = 0; i < population.length; i++) {
 			population[i] = new Person();
 		}
 
-		int patientZeroIndex = (int)(Math.random() * 500); 
-		population[patientZeroIndex].hardInfect(gameVirus);
-
 		refreshArrayLists();
-		dayData.add(new Day(dayData.size() + 1, infectedPeople.size(), 0, 0, susceptiblePeople.size()));
     }
 
 	public void refreshArrayLists() {
@@ -46,6 +43,13 @@ public class Simulator {
 				recoveredPeople.add(p);
 			}
 		}
+	}
+	
+	public void initPatientZero() {
+		this.patientZeroIndex = (int)(Math.random() * 500); 
+		population[patientZeroIndex].hardInfect(gameVirus);
+		refreshArrayLists();
+		dayData.add(new Day(dayData.size() + 1, infectedPeople.size(), 0, 0, susceptiblePeople.size()));
 	}
    
     public void updateInfectability(int infectability) {
@@ -69,7 +73,6 @@ public class Simulator {
 	}
 
 	public Day simulate() {
-		System.out.println("Virus incubation: " + gameVirus.getIncubation() + ", Virus resistance: " + gameVirus.getResistance());
 		int casesAtStart = infectedPeople.size();
 		int deathsAtStart = deadPeople.size();
 		int recoveriesAtStart = recoveredPeople.size();
@@ -90,7 +93,7 @@ public class Simulator {
 		for (Person person : population) {
 			person.update();
 		}
-
+		
 		refreshArrayLists();
 
 		int deltaCases = infectedPeople.size() - casesAtStart;
@@ -100,11 +103,10 @@ public class Simulator {
 		int deltaDeaths = deadPeople.size() - deathsAtStart;
 		int deltaRecoveries = recoveredPeople.size() - recoveriesAtStart;
 
-		// Once the methods that do the math are coded, replace each parameter with it's corresponding operation. 
-		dayData.add(new Day(dayData.size() + 1, deltaCases, deltaDeaths, deltaRecoveries, susceptiblePeople.size()));
 		Day.addTotalCases(deltaCases);
 		Day.addTotalDeaths(deltaDeaths);
 		Day.addTotalRecoveries(deltaRecoveries);
+		dayData.add(new Day(dayData.size() + 1, deltaCases, deltaDeaths, deltaRecoveries, susceptiblePeople.size()));
 		return dayData.get(dayData.size() - 2);
 	}
 }
