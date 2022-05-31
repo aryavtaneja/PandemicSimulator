@@ -9,7 +9,7 @@ package src;
 import java.util.*; 
 
 public class Simulator {
-    private Person[] population = new Person[5000];
+    private Person[] population = new Person[6000];
     private ArrayList<Person> susceptiblePeople = new ArrayList<Person>(); 
     private ArrayList<Person> infectedPeople = new ArrayList<Person>(); 
     private ArrayList<Person> deadPeople = new ArrayList<Person>();
@@ -19,8 +19,8 @@ public class Simulator {
     private int patientZeroIndex;
     
     public Simulator() {
-		for (int i = 0; i < population.length; i++) {
-			population[i] = new Person();
+		for (int i = 0; i < getPopulation().length; i++) {
+			getPopulation()[i] = new Person();
 		}
 
 		refreshArrayLists();
@@ -28,15 +28,15 @@ public class Simulator {
 
 	public void refreshArrayLists() {
 		susceptiblePeople.clear();
-		infectedPeople.clear();
+		getInfectedPeople().clear();
 		deadPeople.clear();
 		recoveredPeople.clear();
 		
-		for(Person p : population) {
+		for(Person p : getPopulation()) {
 			if (p.isSusceptible()) {
 				susceptiblePeople.add(p);
 			} else if (p.isInfected()) {
-				infectedPeople.add(p);
+				getInfectedPeople().add(p);
 			} else if (p.isDead()) {
 				deadPeople.add(p);
 			} else {
@@ -47,7 +47,7 @@ public class Simulator {
 	
 	public void initPatientZero() {
 		this.patientZeroIndex = (int)(Math.random() * 500); 
-		population[patientZeroIndex].hardInfect(gameVirus);
+		getPopulation()[patientZeroIndex].hardInfect(gameVirus);
 		refreshArrayLists();
 		dayData.add(new Day(dayData.size() + 1, 1, 0, 0, susceptiblePeople.size()));
 		Day.addTotalCases(1);
@@ -74,15 +74,16 @@ public class Simulator {
 	}
 
 	public Day simulate() {
+		
 		int deltaCases = 0;
 		int deathsAtStart = deadPeople.size();
 		int recoveriesAtStart = recoveredPeople.size();
 		int numberToContact;
 
-		if ((12 * infectedPeople.size()) > susceptiblePeople.size() || susceptiblePeople.size() < (12 * infectedPeople.size())) {
+		if ((12 * getInfectedPeople().size()) > susceptiblePeople.size() || susceptiblePeople.size() < (12 * getInfectedPeople().size())) {
 			numberToContact = susceptiblePeople.size();
 		} else {
-			numberToContact = 12 * infectedPeople.size();
+			numberToContact = 12 * getInfectedPeople().size();
 		}
 
 		for (int i = 0; i < numberToContact; i++) {
@@ -93,7 +94,7 @@ public class Simulator {
 			refreshArrayLists();
 		}
 
-		for (Person person : population) {
+		for (Person person : getPopulation()) {
 			person.update();
 		}
 		
@@ -108,6 +109,18 @@ public class Simulator {
 		Day.addTotalRecoveries(deltaRecoveries);
 		dayData.add(new Day(dayData.size() + 1, deltaCases, deltaDeaths, deltaRecoveries, susceptiblePeople.size()));
 		return dayData.get(dayData.size() - 2);
+	}
+
+	public ArrayList<Person> getInfectedPeople() {
+		return infectedPeople;
+	}
+
+	public void setInfectedPeople(ArrayList<Person> infectedPeople) {
+		this.infectedPeople = infectedPeople;
+	}
+
+	public Person[] getPopulation() {
+		return population;
 	}
 }
 
