@@ -49,7 +49,8 @@ public class Simulator {
 		this.patientZeroIndex = (int)(Math.random() * 500); 
 		population[patientZeroIndex].hardInfect(gameVirus);
 		refreshArrayLists();
-		dayData.add(new Day(dayData.size() + 1, infectedPeople.size(), 0, 0, susceptiblePeople.size()));
+		dayData.add(new Day(dayData.size() + 1, 1, 0, 0, susceptiblePeople.size()));
+		Day.addTotalCases(1);
 	}
    
     public void updateInfectability(int infectability) {
@@ -73,7 +74,7 @@ public class Simulator {
 	}
 
 	public Day simulate() {
-		int casesAtStart = infectedPeople.size();
+		int deltaCases = 0;
 		int deathsAtStart = deadPeople.size();
 		int recoveriesAtStart = recoveredPeople.size();
 		int numberToContact;
@@ -86,7 +87,9 @@ public class Simulator {
 
 		for (int i = 0; i < numberToContact; i++) {
 			int randomPersonIndex = (int) (Math.random() * susceptiblePeople.size());
-			susceptiblePeople.get(randomPersonIndex).closeContact(gameVirus);
+			if (susceptiblePeople.get(randomPersonIndex).closeContact(gameVirus)) {
+				deltaCases++;
+			}
 			refreshArrayLists();
 		}
 
@@ -96,10 +99,7 @@ public class Simulator {
 		
 		refreshArrayLists();
 
-		int deltaCases = infectedPeople.size() - casesAtStart;
-        if (deltaCases < 0) {
-            deltaCases = 0;
-        }
+		
 		int deltaDeaths = deadPeople.size() - deathsAtStart;
 		int deltaRecoveries = recoveredPeople.size() - recoveriesAtStart;
 

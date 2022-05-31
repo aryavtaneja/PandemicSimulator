@@ -81,7 +81,7 @@ public class Person {
     * 
     * @param virus The virus that the person is infected with
     */
-   public void closeContact(Virus virus) {
+   public boolean closeContact(Virus virus) {
       int rand = (int) ((Math.random() * 99) + 1);
       if (rand <= virus.getInfectability() * 100) {
          this.mortality = virus.getMortality();
@@ -89,6 +89,9 @@ public class Person {
          this.infected = true;
          this.incubation = virus.getIncubation();
          this.resistance = virus.getResistance();
+         return true;
+      } else {
+         return false;
       }
    }
 
