@@ -9,7 +9,7 @@ package src;
 import java.util.*; 
 
 public class Simulator {
-    private Person[] population = new Person[500];
+    private Person[] population = new Person[5000];
     private ArrayList<Person> susceptiblePeople = new ArrayList<Person>(); 
     private ArrayList<Person> infectedPeople = new ArrayList<Person>(); 
     private ArrayList<Person> deadPeople = new ArrayList<Person>();

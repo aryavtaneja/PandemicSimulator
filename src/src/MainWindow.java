@@ -109,11 +109,11 @@ public class MainWindow extends JFrame {
 			}
 		});
 		resistanceMenu.add(resistance);
-		resistance.setValue(0);
+		resistance.setValue(14);
 		resistance.setPaintTicks(true);
 		resistance.setPaintLabels(true);
 		resistance.setMinorTickSpacing(1);
-		resistance.setMaximum(10);
+		resistance.setMaximum(31);
 		resistance.setMajorTickSpacing(2);
 		
 		JMenu incubationMenu = new JMenu("Incubation Period");
