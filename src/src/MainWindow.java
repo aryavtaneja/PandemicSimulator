@@ -14,15 +14,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.text.DecimalFormat;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import java.awt.Rectangle;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.event.ChangeEvent;
 import javax.swing.JMenuBar;
 import javax.swing.JFrame;
@@ -36,6 +40,7 @@ import javax.swing.DropMode;
 import javax.swing.border.EmptyBorder;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLayeredPane;
+import java.awt.Point;
 
 public class MainWindow extends JFrame {
 
@@ -48,7 +53,7 @@ public class MainWindow extends JFrame {
 
 	private JPanel Game;
 	private JPanel statsScreen;
-	private JTextField diseaseName;
+	private static JTextField diseaseName;
 	private int times = 0;
 	private JPanel mainGame;
 	private JTextArea gameText;
@@ -56,6 +61,7 @@ public class MainWindow extends JFrame {
 	private JButton nextDayButton;
 	private JButton doubleSpeed;
 	private JButton fastForward;
+	private static DecimalFormat numberFormat = new DecimalFormat("#.00");
 	/**
 	 * Launch the application.
 	 */
@@ -75,12 +81,18 @@ public class MainWindow extends JFrame {
 
 	
 	public static boolean updateText(Day currentDay, JTextArea gameText) {
-		if (game.getInfectedPeople().size() == 0) {
+		if (currentDay.infect() == 0) {
+			gameText.setBounds(50, 330, 620, 384);
 			gameText.setText(
-					" Day " + currentDay.dayNumber() + 
-					"\n Initial population: " + game.getPopulation().length + 
-					"\n Total deaths: " + Day.totalDeaths() +
-					"\n Total recoveries: " + Day.totalRecoveries());
+					" Disease " + getDiseaseName().getText() + " has run it's course." +
+					"\n It took " + currentDay.dayNumber() + " days." +
+					"\n The initial population was " + game.getPopulation().length + " people." +
+					"\n " + Day.totalDeaths() + " people died." + 
+					"\n " + Day.totalRecoveries() + " people recovered." + 
+					"\n " + numberFormat.format(((double) Day.totalDeaths() / Day.totalCases()) * 100) + "% of cases died." + 
+					"\n " + numberFormat.format(((double) Day.totalRecoveries() / Day.totalCases()) * 100) + "% of cases recovered."  
+);
+			
 			
 			return true;
 		} else { 
@@ -119,6 +131,7 @@ public class MainWindow extends JFrame {
 		optionsMenu.add(resistanceMenu);
 
 		JSlider resistance = new JSlider();
+		resistance.setFont(new Font("Tahoma", Font.PLAIN, 6));
 		resistance.setMinimum(1);
 		resistance.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
@@ -161,7 +174,6 @@ public class MainWindow extends JFrame {
 
 		JSlider mortality = new JSlider();
 		mortality.setMaximum(10);
-		mortality.setMinimum(1);
 		mortality.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				game.updateMortality(mortality.getValue());
@@ -169,7 +181,7 @@ public class MainWindow extends JFrame {
 			}
 		});
 		mortalityMenu.add(mortality);
-		mortality.setValue(0);
+		mortality.setValue(1);
 		mortality.setPaintTicks(true);
 		mortality.setPaintLabels(true);
 		mortality.setMinorTickSpacing(1);
@@ -260,14 +272,28 @@ public class MainWindow extends JFrame {
 		JButton restartSimulation = new JButton("End Simulation");
 		restartSimulation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+
+				gameText.setBounds(50, 330, 620, 384);
+
 				gameText.setText(
-						" Day " + currentDay.dayNumber() + 
-						"\n Initial population: " + game.getPopulation().length + 
-						"\n Total deaths: " + Day.totalDeaths() +
-						"\n Total recoveries: " + Day.totalRecoveries());
+						
+						" Disease " + getDiseaseName().getText() + " has run it's course." +
+								"\n It took " + currentDay.dayNumber() + " days." +
+								"\n The initial population was " + game.getPopulation().length + " people." +
+								"\n " + Day.totalDeaths() + " people died." + 
+								"\n " + Day.totalRecoveries() + " people recovered." +
+								"\n " + numberFormat.format(((double) Day.totalDeaths() / Day.totalCases()) * 100) + "% of cases died." + 
+								"\n " + numberFormat.format(((double) Day.totalRecoveries() / Day.totalCases()) * 100) + "% of cases recovered."  
+
+								
+								);
+				
 				nextDayButton.setEnabled(false);
 				fastForward.setEnabled(false);
 				doubleSpeed.setEnabled(false);
+				restartSimulation.setEnabled(false);
+
 				mainGame.removeAll();
 				setContentPane(statsScreen);
 				statsScreen.add(gameText);
@@ -413,13 +439,23 @@ public class MainWindow extends JFrame {
 		
 		
 		statsScreen = new JPanel();
+		statsScreen.setBounds(0, 0, 0, 0);
 		statsScreen.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 
 		
 
 		mainGame = new JPanel();
+		Game.setLayout(null);
 		GroupLayout gl_Game = new GroupLayout(Game);
+		gl_Game.setHorizontalGroup(
+			gl_Game.createParallelGroup(Alignment.LEADING)
+				.addGap(0, 696, Short.MAX_VALUE)
+		);
+		gl_Game.setVerticalGroup(
+			gl_Game.createParallelGroup(Alignment.LEADING)
+				.addGap(0, 651, Short.MAX_VALUE)
+		);
 		gl_Game.setHorizontalGroup(
 			gl_Game.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_Game.createSequentialGroup()
@@ -479,6 +515,7 @@ public class MainWindow extends JFrame {
 					nextDayButton.setEnabled(false);
 					fastForward.setEnabled(false);
 					doubleSpeed.setEnabled(false);
+					restartSimulation.setEnabled(false);
 					mainGame.removeAll();
 					setContentPane(statsScreen);
 					statsScreen.add(gameText);
@@ -492,6 +529,9 @@ public class MainWindow extends JFrame {
 				
 				for (int i = 0; i < advance.getValue(); i++) {
 					currentDay = game.simulate();
+					if(currentDay.infect() == 0) {
+						break;
+					}
 				}
 				setTitle("Pestilence Corporation - Day " + currentDay.dayNumber());
 				if (updateText(currentDay, gameText)) {
@@ -512,6 +552,9 @@ public class MainWindow extends JFrame {
 				
 				for (int i = 0; i < advance.getValue() * 2; i++) {
 					currentDay = game.simulate();
+					if(currentDay.infect() == 0) {
+						break;
+					}
 				}
 				setTitle("Pestilence Corporation - Day " + currentDay.dayNumber());
 				if (updateText(currentDay, gameText)) {
@@ -529,12 +572,39 @@ public class MainWindow extends JFrame {
 		doubleSpeed.setFont(new Font("Calibri", Font.PLAIN, 14));
 		doubleSpeed.setBounds(458, 565, 200, 37);
 		mainGame.add(doubleSpeed);
+		statsScreen.setLayout(null);
+		Game.add(statsScreen);
+
 		
 		JLabel graphScreen = new JLabel("");
-		graphScreen.setBounds(0, 11, 676, 544);
-		graphScreen.setPreferredSize(new Dimension(300,300));
+		graphScreen.setIcon(new ImageIcon(MainWindow.class.getResource("/img/icon_small.png")));
+		graphScreen.setLocation(new Point(200, 0));
+		graphScreen.setPreferredSize(new Dimension(500, 500));
+		graphScreen.setBounds(225, -100, 500, 500);
 		statsScreen.add(graphScreen);
+		
+		JButton csvButton = new JButton("Download .csv of data");
+		csvButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser choose = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+	            choose.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int returnValue = choose.showOpenDialog(null);
+
+	            if(returnValue == JFileChooser.APPROVE_OPTION){
+	                File file = choose.getSelectedFile();
+	                csvButton.setText("Folder Selected: " + file.getName());
+	                ExcelWriter.writeCsv(getDiseaseName().getText(), file.getAbsolutePath());
+	             }else{
+	                csvButton.setText("Open command canceled");
+
+	             } }});
+		csvButton.setFont(new Font("Calibri", Font.PLAIN, 14));
+		csvButton.setBounds(40, 575, 600, 50);
+		statsScreen.add(csvButton);
 
 	}
 	
+	public static JTextField getDiseaseName() {
+		return diseaseName;
+	}
 }

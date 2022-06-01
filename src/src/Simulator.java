@@ -14,7 +14,7 @@ public class Simulator {
     private ArrayList<Person> infectedPeople = new ArrayList<Person>(); 
     private ArrayList<Person> deadPeople = new ArrayList<Person>();
 	private ArrayList<Person> recoveredPeople = new ArrayList<Person>();
-    private ArrayList <Day> dayData = new ArrayList<>();
+    private static ArrayList <Day> dayData = new ArrayList<>();
     private Virus gameVirus = new Virus();
     private int patientZeroIndex;
     
@@ -49,7 +49,7 @@ public class Simulator {
 		this.patientZeroIndex = (int)(Math.random() * 500); 
 		getPopulation()[patientZeroIndex].hardInfect(gameVirus);
 		refreshArrayLists();
-		dayData.add(new Day(dayData.size() + 1, 1, 0, 0, susceptiblePeople.size()));
+		dayData.add(new Day(dayData.size() + 1, 1, 0, 0, susceptiblePeople.size(), infectedPeople.size()));
 		Day.addTotalCases(1);
 	}
    
@@ -107,7 +107,7 @@ public class Simulator {
 		Day.addTotalCases(deltaCases);
 		Day.addTotalDeaths(deltaDeaths);
 		Day.addTotalRecoveries(deltaRecoveries);
-		dayData.add(new Day(dayData.size() + 1, deltaCases, deltaDeaths, deltaRecoveries, susceptiblePeople.size()));
+		dayData.add(new Day(dayData.size() + 1, deltaCases, deltaDeaths, deltaRecoveries, susceptiblePeople.size(), infectedPeople.size()));
 		return dayData.get(dayData.size() - 2);
 	}
 
@@ -122,5 +122,8 @@ public class Simulator {
 	public Person[] getPopulation() {
 		return population;
 	}
+	public static ArrayList<Day> getDayData(){
+		return dayData;
+	}
 }
-
+	
