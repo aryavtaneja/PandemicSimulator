@@ -51,8 +51,11 @@ public class MainWindow extends JFrame {
 	private JTextField diseaseName;
 	private int times = 0;
 	private JPanel mainGame;
-	private JTextArea gameText_1;
-
+	private JTextArea gameText;
+	private Day currentDay;
+	private JButton nextDayButton;
+	private JButton doubleSpeed;
+	private JButton fastForward;
 	/**
 	 * Launch the application.
 	 */
@@ -254,11 +257,20 @@ public class MainWindow extends JFrame {
 		JMenu mnNewMenu = new JMenu("Simulation State");
 		configMenu.add(mnNewMenu);
 
-		JButton restartSimulation = new JButton("Restart Simulation");
+		JButton restartSimulation = new JButton("End Simulation");
 		restartSimulation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				game = new Simulator();
-
+				gameText.setText(
+						" Day " + currentDay.dayNumber() + 
+						"\n Initial population: " + game.getPopulation().length + 
+						"\n Total deaths: " + Day.totalDeaths() +
+						"\n Total recoveries: " + Day.totalRecoveries());
+				nextDayButton.setEnabled(false);
+				fastForward.setEnabled(false);
+				doubleSpeed.setEnabled(false);
+				mainGame.removeAll();
+				setContentPane(statsScreen);
+				statsScreen.add(gameText);
 			}
 		});
 		mnNewMenu.add(restartSimulation);
@@ -266,8 +278,8 @@ public class MainWindow extends JFrame {
 		JMenu ffConfig = new JMenu("Fast Forward Config");
 		configMenu.add(ffConfig);
 
-		JButton fastForward = new JButton();
-		JButton doubleSpeed = new JButton();
+		fastForward = new JButton();
+		doubleSpeed = new JButton();
 
 		JLabel daysLabel = new JLabel("Days to Forward");
 		ffConfig.add(daysLabel);
@@ -429,22 +441,22 @@ public class MainWindow extends JFrame {
 		mainGame.add(fastForward);
 		mainGame.add(worldBackground);
 
-		gameText_1 = new JTextArea();
-		gameText_1.setWrapStyleWord(true);
-		gameText_1.setFont(new Font("Franklin Gothic Book", Font.PLAIN, 25));
-		gameText_1.setLineWrap(true);
-		gameText_1.setText(
+		gameText = new JTextArea();
+		gameText.setWrapStyleWord(true);
+		gameText.setFont(new Font("Franklin Gothic Book", Font.PLAIN, 25));
+		gameText.setLineWrap(true);
+		gameText.setText(
 				"Welcome to Pestilence Corporation. Craft your disease by going  to the Options, and let the infection begin. ");
-		gameText_1.setOpaque(false);
-		gameText_1.setBounds(33, 89, 620, 384);
-		gameText_1.setEditable(false);
-		mainGame.add(gameText_1);
+		gameText.setOpaque(false);
+		gameText.setBounds(33, 89, 620, 384);
+		gameText.setEditable(false);
+		mainGame.add(gameText);
 		Game.setLayout(gl_Game);
 		
 		fastForward.setEnabled(false);
 		doubleSpeed.setEnabled(false);
 		
-		JButton nextDayButton = new JButton();
+		nextDayButton = new JButton();
 		nextDayButton.setFont(new Font("Calibri", Font.PLAIN, 14));
 		mainGame.add(nextDayButton);
 		nextDayButton.setBounds(10, 566, 200, 37);
@@ -460,16 +472,16 @@ public class MainWindow extends JFrame {
 					doubleSpeed.setEnabled(true);
 
 				}
-				Day currentDay = game.simulate();
+				currentDay = game.simulate();
 
 				setTitle("Pestilence Corporation - Day " + currentDay.dayNumber());
-				if (updateText(currentDay, gameText_1)) {
+				if (updateText(currentDay, gameText)) {
 					nextDayButton.setEnabled(false);
 					fastForward.setEnabled(false);
 					doubleSpeed.setEnabled(false);
 					mainGame.removeAll();
 					setContentPane(statsScreen);
-					statsScreen.add(gameText_1);
+					statsScreen.add(gameText);
 				}
 				
 			}
@@ -477,18 +489,18 @@ public class MainWindow extends JFrame {
 
 		fastForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Day currentDay = null;
+				
 				for (int i = 0; i < advance.getValue(); i++) {
 					currentDay = game.simulate();
 				}
 				setTitle("Pestilence Corporation - Day " + currentDay.dayNumber());
-				if (updateText(currentDay, gameText_1)) {
+				if (updateText(currentDay, gameText)) {
 					nextDayButton.setEnabled(false);
 					fastForward.setEnabled(false);
 					doubleSpeed.setEnabled(false);
 					mainGame.removeAll();
 					setContentPane(statsScreen);
-					statsScreen.add(gameText_1);
+					statsScreen.add(gameText);
 				}
 			}
 		});
@@ -497,18 +509,18 @@ public class MainWindow extends JFrame {
 
 		doubleSpeed.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Day currentDay = null;
+				
 				for (int i = 0; i < advance.getValue() * 2; i++) {
 					currentDay = game.simulate();
 				}
 				setTitle("Pestilence Corporation - Day " + currentDay.dayNumber());
-				if (updateText(currentDay, gameText_1)) {
+				if (updateText(currentDay, gameText)) {
 					nextDayButton.setEnabled(false);
 					fastForward.setEnabled(false);
 					doubleSpeed.setEnabled(false);
 					mainGame.removeAll();
 					setContentPane(statsScreen);
-					statsScreen.add(gameText_1);
+					statsScreen.add(gameText);
 				}
 				
 				
