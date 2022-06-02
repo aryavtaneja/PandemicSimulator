@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 
 import javax.swing.GroupLayout;
@@ -38,8 +39,6 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import javax.swing.DropMode;
 import javax.swing.border.EmptyBorder;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JLayeredPane;
 import java.awt.Point;
 
 public class MainWindow extends JFrame {
@@ -592,8 +591,13 @@ public class MainWindow extends JFrame {
 
 	            if(returnValue == JFileChooser.APPROVE_OPTION){
 	                File file = choose.getSelectedFile();
-	                csvButton.setText("Folder Selected: " + file.getName());
-	                ExcelWriter.writeCsv(getDiseaseName().getText(), file.getAbsolutePath());
+	                csvButton.setText("Folder Selected: " + file.getName() + " - File saved as " + getDiseaseName().getText() + ".csv");
+	                try {
+						ExcelWriter.writeCsv(getDiseaseName().getText(), file.getAbsolutePath());
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						csvButton.setText("File unable to be written.");
+					}
 	             }else{
 	                csvButton.setText("Open command canceled");
 

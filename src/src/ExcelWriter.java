@@ -1,3 +1,9 @@
+/**
+ * File writer for excel data. 
+ * @author Daniel Welicki 
+ * @author Aryav Taneja
+ */
+
 package src;
 
 import java.io.File;
@@ -24,39 +30,32 @@ public class ExcelWriter {
 //		
 //	}
 	
-	public static void writeCsv(String virusName, String path) {
+	public static void writeCsv(String virusName, String path) throws FileNotFoundException {
 		ArrayList<Day> dayData = Simulator.getDayData();
-		try {
-			PrintWriter writeExcel = new PrintWriter(path + "/" + virusName + ".csv");
-			StringBuilder buildExcel = new StringBuilder();
-			String[] categories = {"Day Number", "Deaths", "Recoveries", "Susceptible People", "Infected People"};
-			for(String s : categories) {
-				buildExcel.append(s);
-				buildExcel.append(",");
-			}
+		PrintWriter writeExcel = new PrintWriter(path + "/" + virusName + ".csv");
+		StringBuilder buildExcel = new StringBuilder();
+		String[] categories = {"Day Number", "Deaths", "Recoveries", "Susceptible People", "Infected People"};
+		for(String s : categories) {
+			buildExcel.append(s);
+			buildExcel.append(",");
+		}
+		buildExcel.append("\n");
+		for(Day d : dayData) {
+			buildExcel.append(Integer.toString(d.dayNumber()));
+			buildExcel.append(",");
+			buildExcel.append(Integer.toString(d.deaths()));
+			buildExcel.append(",");
+			buildExcel.append(Integer.toString(d.recoveries()));
+			buildExcel.append(",");
+			buildExcel.append(Integer.toString(d.sus()));
+			buildExcel.append(",");
+			buildExcel.append(Integer.toString(d.infect()));
+			buildExcel.append(",");
 			buildExcel.append("\n");
-			for(Day d : dayData) {
-				buildExcel.append(Integer.toString(d.dayNumber()));
-				buildExcel.append(",");
-				buildExcel.append(Integer.toString(d.deaths()));
-				buildExcel.append(",");
-				buildExcel.append(Integer.toString(d.recoveries()));
-				buildExcel.append(",");
-				buildExcel.append(Integer.toString(d.sus()));
-				buildExcel.append(",");
-				buildExcel.append(Integer.toString(d.infect()));
-				buildExcel.append(",");
-				buildExcel.append("\n");
-			}
+		}
 			writeExcel.write(buildExcel.toString());
 			writeExcel.close();
 
-		} catch (FileNotFoundException e) {
-			System.out.println("File unable to be written.");
-
-		    
-		}
+		} 
 	}	
 	
-
-}
