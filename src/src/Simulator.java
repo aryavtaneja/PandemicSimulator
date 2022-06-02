@@ -9,6 +9,17 @@ package src;
 import java.util.*; 
 
 public class Simulator {
+
+	/**
+	 * @param population The full population in the simulation, set to 6,000 people.
+	 * @param susceptiblePeople An ArrayList of the people who are still able to be infected.
+	 * @param infectedPeopple An ArrayList of the people who are currently infected.
+	 * @param deadPeople An ArrayList of the people who are currently dead.
+	 * @param recoveredPeople An ArrayList of the people who survived the infection and can no longer be infected.
+	 * @param dayData An ArrayList of all of the infection data from each day.
+	 * @param gameVirus The virus which will be used in the simulation
+	 * @param patientZeroIndex The index of the Person in population which will become patient zero.
+	 */
     private Person[] population = new Person[6000];
     private ArrayList<Person> susceptiblePeople = new ArrayList<Person>(); 
     private ArrayList<Person> infectedPeople = new ArrayList<Person>(); 
@@ -26,6 +37,9 @@ public class Simulator {
 		refreshArrayLists();
     }
 
+	/**
+	 * Clears all of the ArrayLists and then fills them appropriately by checking every Person in population.
+	 */
 	public void refreshArrayLists() {
 		susceptiblePeople.clear();
 		getInfectedPeople().clear();
@@ -45,6 +59,9 @@ public class Simulator {
 		}
 	}
 	
+	/**
+	 * Starts the simulation by infecting patient zero and logging the first day of data.
+	 */
 	public void initPatientZero() {
 		this.patientZeroIndex = (int)(Math.random() * 500); 
 		getPopulation()[patientZeroIndex].hardInfect(gameVirus);
@@ -56,25 +73,28 @@ public class Simulator {
     public void updateInfectability(int infectability) {
 		gameVirus.setInfectability(infectability / 10.0);
 	}
+
 	public void updateMortality(int mortality) {
-	
 		gameVirus.setMortality(mortality/ 10.0 );
 	}
+	
 	public void updateSus(boolean[] sus) {
 		gameVirus.setSusceptibilities(sus);
 	}
+
 	public void updateIncubation(int incubation) {
 		gameVirus.setIncubation(incubation);
 	}
+
 	public void updateResistance(int resistance) {
 		gameVirus.setResistance(resistance);
 	}
+
 	public void updateName(String name) {
 		gameVirus.setName(name);
 	}
 
 	public Day simulate() {
-		
 		int deltaCases = 0;
 		int deathsAtStart = deadPeople.size();
 		int recoveriesAtStart = recoveredPeople.size();
