@@ -9,6 +9,17 @@ package src;
 import java.util.*; 
 
 public class Simulator {
+
+	/**
+	 * @param population The full population in the simulation, set to 6,000 people.
+	 * @param susceptiblePeople An ArrayList of the people who are still able to be infected.
+	 * @param infectedPeopple An ArrayList of the people who are currently infected.
+	 * @param deadPeople An ArrayList of the people who are currently dead.
+	 * @param recoveredPeople An ArrayList of the people who survived the infection and can no longer be infected.
+	 * @param dayData An ArrayList of all of the infection data from each day.
+	 * @param gameVirus The virus which will be used in the simulation
+	 * @param patientZeroIndex The index of the Person in population which will become patient zero.
+	 */
     private Person[] population = new Person[6000];
     private ArrayList<Person> susceptiblePeople = new ArrayList<Person>(); 
     private ArrayList<Person> infectedPeople = new ArrayList<Person>(); 
@@ -18,7 +29,8 @@ public class Simulator {
     private Virus gameVirus = new Virus();
     private int patientZeroIndex;
     
-    public Simulator() {
+	// initializes the population array
+    public Simulator() { 
 		for (int i = 0; i < getPopulation().length; i++) {
 			getPopulation()[i] = new Person();
 		}
@@ -26,6 +38,9 @@ public class Simulator {
 		refreshArrayLists();
     }
 
+	/**
+	 * Clears all of the ArrayLists and then fills them appropriately by checking every Person in population.
+	 */
 	public void refreshArrayLists() {
 		susceptiblePeople.clear();
 		getInfectedPeople().clear();
@@ -45,6 +60,9 @@ public class Simulator {
 		}
 	}
 	
+	/**
+	 * Starts the simulation by infecting patient zero and logging the first day of data.
+	 */
 	public void initPatientZero() {
 		this.patientZeroIndex = (int)(Math.random() * 500); 
 		getPopulation()[patientZeroIndex].hardInfect(gameVirus);
@@ -53,49 +71,50 @@ public class Simulator {
 		Day.addTotalCases(1);
 	}
    
-    public void updateInfectability(int infectability) {
+    public void updateInfectability(int infectability) { // updates infectability 
 		gameVirus.setInfectability(infectability / 10.0);
 	}
-	public void updateMortality(int mortality) {
-	
+	public void updateMortality(int mortality) { // updates mortality 
 		gameVirus.setMortality(mortality/ 10.0 );
 	}
-	public void updateSus(boolean[] sus) {
+	public void updateSus(boolean[] sus) { // updates susceptibility
 		gameVirus.setSusceptibilities(sus);
 	}
-	public void updateIncubation(int incubation) {
+	public void updateIncubation(int incubation) { // updates incubation 
 		gameVirus.setIncubation(incubation);
 	}
-	public void updateResistance(int resistance) {
+	public void updateResistance(int resistance) { // updates resistance
 		gameVirus.setResistance(resistance);
 	}
-	public void updateName(String name) {
+	public void updateName(String name) { // updates Name 
 		gameVirus.setName(name);
 	}
 
-	public Day simulate() {
+	public Day simulate() { 
 		
 		int deltaCases = 0;
 		int deathsAtStart = deadPeople.size();
 		int recoveriesAtStart = recoveredPeople.size();
 		int numberToContact;
 
+		
 		if ((12 * getInfectedPeople().size()) > susceptiblePeople.size() || susceptiblePeople.size() < (12 * getInfectedPeople().size())) {
-			numberToContact = susceptiblePeople.size();
-		} else {
+			numberToContact = susceptiblePeople.size(); // everyone that is susceptible is close contacted if 12 times the number of infected people is more than susceptible
+		} else { // each infected person contacts 12 people if 12 times the amount of susceptible people is less than those susceptible 
 			numberToContact = 12 * getInfectedPeople().size();
 		}
 
-		for (int i = 0; i < numberToContact; i++) {
+		for (int i = 0; i < numberToContact; i++) { 
+			// determines randomly if each person who is contacted gets the virus and adds that to list if they are
 			int randomPersonIndex = (int) (Math.random() * susceptiblePeople.size());
 			if (susceptiblePeople.get(randomPersonIndex).closeContact(gameVirus)) {
 				deltaCases++;
+				refreshArrayLists(); 
 			}
-			refreshArrayLists();
 		}
 
 		for (Person person : getPopulation()) {
-			person.update();
+			person.update(); // updates sttatus for everyone in population 
 		}
 		
 		refreshArrayLists();
