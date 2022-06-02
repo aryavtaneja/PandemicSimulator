@@ -109,15 +109,14 @@ public class Simulator {
 			int randomPersonIndex = (int) (Math.random() * susceptiblePeople.size());
 			if (susceptiblePeople.get(randomPersonIndex).closeContact(gameVirus)) {
 				deltaCases++;
-				refreshArrayLists(); 
 			}
+			refreshArrayLists(); 
 		}
-
 		for (Person person : getPopulation()) {
 			person.update(); // updates sttatus for everyone in population 
 		}
 		
-		refreshArrayLists();
+		 refreshArrayLists();
 
 		
 		int deltaDeaths = deadPeople.size() - deathsAtStart;
@@ -126,8 +125,8 @@ public class Simulator {
 		Day.addTotalCases(deltaCases);
 		Day.addTotalDeaths(deltaDeaths);
 		Day.addTotalRecoveries(deltaRecoveries);
-		dayData.add(new Day(dayData.size() + 1, deltaCases, deltaDeaths, deltaRecoveries, susceptiblePeople.size(), infectedPeople.size()));
-		return dayData.get(dayData.size() - 2);
+		dayData.add(new Day(dayData.size(), deltaCases, deltaDeaths, deltaRecoveries, susceptiblePeople.size(), infectedPeople.size()));
+		return dayData.get(dayData.size() - 1);
 	}
 
 	public ArrayList<Person> getInfectedPeople() {
