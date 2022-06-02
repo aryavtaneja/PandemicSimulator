@@ -55,13 +55,21 @@ This project will require 3 people or more, and learning of the swing GUI by at 
 If more members are added, the project can be scalable, adding more ideas as the project expands.
 
 ## Project Structure:
-```
-├── bin # builds
-| ├── img # images
-| └── src # class files
-├── notes # meeting notes
-├── src # project file
-| ├── img # images
-| └── src # source code
-└── README.md # project description
+```       
+├── bin                                 # builds
+| ├── img                               # images
+| └── src                               # class files
+├── notes                               # meeting notes
+├── src                                 # project file
+| ├── img                               # images
+| └── src                               # source code
+├── .gitignore                          # ignore files
+├── eclipseStuff.rar                    # CI file
+├── jgoodies-forms-1.8.0-sources.jar    # JGoodies
+├── jgoodies-forms-1.8.0.jar            # JGoodies
+├── LISCENSE                            # license file
+├── miglayout-src.zip                   # MigLayout
+├── miglayout15-swing.jar               # MigLayout
+└── README.md                           # project description
+
 ```
