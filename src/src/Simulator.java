@@ -9,14 +9,25 @@ package src;
 import java.util.*; 
 
 public class Simulator {
-    private Person[] population = new Person[6000]; // declares new array of Persons class with a population of 6000
-    private ArrayList<Person> susceptiblePeople = new ArrayList<Person>(); // declares an arraylist of susceptible people
-    private ArrayList<Person> infectedPeople = new ArrayList<Person>(); // declares an arraylist of infected people that will be added to when more infections occur
-    private ArrayList<Person> deadPeople = new ArrayList<Person>(); // declares arraylist of dead people
-	private ArrayList<Person> recoveredPeople = new ArrayList<Person>(); // declares arraylist of people who've recovered 
-    private static ArrayList <Day> dayData = new ArrayList<>(); // declares arraylist of days 
-    private Virus gameVirus = new Virus(); // initializes new virus for the game
-    private int patientZeroIndex; // declares an int that has what index patient zero is in the array  
+
+	/**
+	 * @param population The full population in the simulation, set to 6,000 people.
+	 * @param susceptiblePeople An ArrayList of the people who are still able to be infected.
+	 * @param infectedPeopple An ArrayList of the people who are currently infected.
+	 * @param deadPeople An ArrayList of the people who are currently dead.
+	 * @param recoveredPeople An ArrayList of the people who survived the infection and can no longer be infected.
+	 * @param dayData An ArrayList of all of the infection data from each day.
+	 * @param gameVirus The virus which will be used in the simulation
+	 * @param patientZeroIndex The index of the Person in population which will become patient zero.
+	 */
+    private Person[] population = new Person[6000];
+    private ArrayList<Person> susceptiblePeople = new ArrayList<Person>(); 
+    private ArrayList<Person> infectedPeople = new ArrayList<Person>(); 
+    private ArrayList<Person> deadPeople = new ArrayList<Person>();
+	private ArrayList<Person> recoveredPeople = new ArrayList<Person>();
+    private static ArrayList <Day> dayData = new ArrayList<>();
+    private Virus gameVirus = new Virus();
+    private int patientZeroIndex;
     
 	// initializes the population array
     public Simulator() { 
@@ -26,8 +37,10 @@ public class Simulator {
 
 		refreshArrayLists();
     }
-	
-	// clears previous list of susceptible, infected, dead, and recovered people when a new simulator is declared and adds susceptible, infected, dead, and recovered people to the arraylists
+
+	/**
+	 * Clears all of the ArrayLists and then fills them appropriately by checking every Person in population.
+	 */
 	public void refreshArrayLists() {
 		susceptiblePeople.clear();
 		getInfectedPeople().clear();
@@ -46,7 +59,10 @@ public class Simulator {
 			}
 		}
 	}
-	// generates a random patient zero and starts incubation period 
+	
+	/**
+	 * Starts the simulation by infecting patient zero and logging the first day of data.
+	 */
 	public void initPatientZero() {
 		this.patientZeroIndex = (int)(Math.random() * 500); 
 		getPopulation()[patientZeroIndex].hardInfect(gameVirus);
@@ -59,7 +75,6 @@ public class Simulator {
 		gameVirus.setInfectability(infectability / 10.0);
 	}
 	public void updateMortality(int mortality) { // updates mortality 
-	
 		gameVirus.setMortality(mortality/ 10.0 );
 	}
 	public void updateSus(boolean[] sus) { // updates susceptibility
