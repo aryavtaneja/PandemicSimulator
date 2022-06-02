@@ -109,8 +109,8 @@ public class Simulator {
 			int randomPersonIndex = (int) (Math.random() * susceptiblePeople.size());
 			if (susceptiblePeople.get(randomPersonIndex).closeContact(gameVirus)) {
 				deltaCases++;
+				refreshArrayLists(); 
 			}
-			refreshArrayLists();
 		}
 
 		for (Person person : getPopulation()) {
