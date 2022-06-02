@@ -1,6 +1,10 @@
+/**
+ * Record which contains day data. 
+ * @author Daniel Welicki 
+ */
 package src;
 
-public record Day(int dayNumber, int cases, int deaths, int recoveries, int sus) {
+public record Day(int dayNumber, int cases, int deaths, int recoveries, int sus, int infect) {
 	private static int totalCases;
 	private static int totalDeaths;
 	private static int totalRecoveries;

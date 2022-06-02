@@ -14,15 +14,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import java.awt.Rectangle;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.event.ChangeEvent;
 import javax.swing.JMenuBar;
 import javax.swing.JFrame;
@@ -34,6 +39,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import javax.swing.DropMode;
 import javax.swing.border.EmptyBorder;
+import java.awt.Point;
 
 public class MainWindow extends JFrame {
 
@@ -46,9 +52,15 @@ public class MainWindow extends JFrame {
 
 	private JPanel Game;
 	private JPanel statsScreen;
-	private JTextField diseaseName;
+	private static JTextField diseaseName;
 	private int times = 0;
-
+	private JPanel mainGame;
+	private JTextArea gameText;
+	private Day currentDay;
+	private JButton nextDayButton;
+	private JButton doubleSpeed;
+	private JButton fastForward;
+	private static DecimalFormat numberFormat = new DecimalFormat("#.00");
 	/**
 	 * Launch the application.
 	 */
@@ -66,6 +78,35 @@ public class MainWindow extends JFrame {
 		});
 	}
 
+	
+	public static boolean updateText(Day currentDay, JTextArea gameText) {
+		if (currentDay.infect() == 0) {
+			gameText.setBounds(50, 330, 620, 384);
+			gameText.setText(
+					" Disease " + getDiseaseName().getText() + " has run it's course." +
+					"\n It took " + currentDay.dayNumber() + " days." +
+					"\n The initial population was " + game.getPopulation().length + " people." +
+					"\n " + Day.totalDeaths() + " people died." + 
+					"\n " + Day.totalRecoveries() + " people recovered." + 
+					"\n " + numberFormat.format(((double) Day.totalDeaths() / Day.totalCases()) * 100) + "% of cases died." + 
+					"\n " + numberFormat.format(((double) Day.totalRecoveries() / Day.totalCases()) * 100) + "% of cases recovered."  
+);
+			
+			
+			return true;
+		} else { 
+			gameText.setText(
+					" Day " + currentDay.dayNumber() +
+							"\n New cases: " + currentDay.cases() +
+							"\n New recoveries: " + currentDay.recoveries() +
+							"\n Susceptible people: " + currentDay.sus() +
+							"\n Total cases: " + Day.totalCases() +
+							"\n Total deaths: " + Day.totalDeaths() +
+							"\n Total recoveries: " + Day.totalRecoveries());
+			return false;
+			
+		}
+	}
 	/**
 	 * Create the frame.
 	 */
@@ -89,6 +130,7 @@ public class MainWindow extends JFrame {
 		optionsMenu.add(resistanceMenu);
 
 		JSlider resistance = new JSlider();
+		resistance.setFont(new Font("Tahoma", Font.PLAIN, 6));
 		resistance.setMinimum(1);
 		resistance.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
@@ -130,7 +172,7 @@ public class MainWindow extends JFrame {
 		optionsMenu.add(mortalityMenu);
 
 		JSlider mortality = new JSlider();
-		mortality.setMinimum(1);
+		mortality.setMaximum(10);
 		mortality.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				game.updateMortality(mortality.getValue());
@@ -138,11 +180,10 @@ public class MainWindow extends JFrame {
 			}
 		});
 		mortalityMenu.add(mortality);
-		mortality.setValue(0);
+		mortality.setValue(1);
 		mortality.setPaintTicks(true);
 		mortality.setPaintLabels(true);
 		mortality.setMinorTickSpacing(1);
-		mortality.setMaximum(10);
 		mortality.setMajorTickSpacing(2);
 
 		JMenu diseaseOptions = new JMenu("Infectivity");
@@ -227,13 +268,34 @@ public class MainWindow extends JFrame {
 		JMenu mnNewMenu = new JMenu("Simulation State");
 		configMenu.add(mnNewMenu);
 
-		JButton endSimulation = new JButton("End Simulation");
-		mnNewMenu.add(endSimulation);
-
-		JButton restartSimulation = new JButton("Restart Simulation");
+		JButton restartSimulation = new JButton("End Simulation");
 		restartSimulation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 
+				gameText.setBounds(50, 330, 620, 384);
+
+				gameText.setText(
+						
+						" Disease " + getDiseaseName().getText() + " has run it's course." +
+								"\n It took " + currentDay.dayNumber() + " days." +
+								"\n The initial population was " + game.getPopulation().length + " people." +
+								"\n " + Day.totalDeaths() + " people died." + 
+								"\n " + Day.totalRecoveries() + " people recovered." +
+								"\n " + numberFormat.format(((double) Day.totalDeaths() / Day.totalCases()) * 100) + "% of cases died." + 
+								"\n " + numberFormat.format(((double) Day.totalRecoveries() / Day.totalCases()) * 100) + "% of cases recovered."  
+
+								
+								);
+				
+				nextDayButton.setEnabled(false);
+				fastForward.setEnabled(false);
+				doubleSpeed.setEnabled(false);
+				restartSimulation.setEnabled(false);
+
+				mainGame.removeAll();
+				setContentPane(statsScreen);
+				statsScreen.add(gameText);
 			}
 		});
 		mnNewMenu.add(restartSimulation);
@@ -241,8 +303,8 @@ public class MainWindow extends JFrame {
 		JMenu ffConfig = new JMenu("Fast Forward Config");
 		configMenu.add(ffConfig);
 
-		JButton fastForward = new JButton();
-		JButton doubleSpeed = new JButton();
+		fastForward = new JButton();
+		doubleSpeed = new JButton();
 
 		JLabel daysLabel = new JLabel("Days to Forward");
 		ffConfig.add(daysLabel);
@@ -279,7 +341,7 @@ public class MainWindow extends JFrame {
 		welcome.setDropMode(DropMode.INSERT);
 		welcome.setLineWrap(true);
 		welcome.setText(
-				"Welcome to Pestilence Corporation. Pestilence Corporation is a pandemic simulator, operating off of several main variables.  Create your virus by setting the starting conditions, and see where the game will take you! Go to game config to edit how fast your fast forward option can be. Options are dynamically updatable through the course of a simulation. Go to simulation state to end the simulation.   ");
+				"Welcome to Pestilence Corporation. Pestilence Corporation is a pandemic simulator, operating off of several main variables.  Create your virus by setting the starting conditions, and see where the game will take you! Go to game config to edit how fast your fast forward option can be. Options are dynamically updatable through the course of a simulation. ");
 		welcome.setBounds(new Rectangle(200, 250));
 		howToPlay.add(welcome);
 
@@ -373,22 +435,39 @@ public class MainWindow extends JFrame {
 		Game = new JPanel();
 		Game.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(Game);
+		
+		
 		statsScreen = new JPanel();
+		statsScreen.setBounds(0, 0, 0, 0);
 		statsScreen.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
 
-		JPanel mainGame = new JPanel();
+		
+
+		mainGame = new JPanel();
+		Game.setLayout(null);
 		GroupLayout gl_Game = new GroupLayout(Game);
 		gl_Game.setHorizontalGroup(
-				gl_Game.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_Game.createSequentialGroup()
-								.addContainerGap(68, Short.MAX_VALUE)
-								.addComponent(mainGame, GroupLayout.PREFERRED_SIZE, 732, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap()));
+			gl_Game.createParallelGroup(Alignment.LEADING)
+				.addGap(0, 696, Short.MAX_VALUE)
+		);
 		gl_Game.setVerticalGroup(
-				gl_Game.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_Game.createSequentialGroup()
-								.addComponent(mainGame, GroupLayout.PREFERRED_SIZE, 627, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(22, Short.MAX_VALUE)));
+			gl_Game.createParallelGroup(Alignment.LEADING)
+				.addGap(0, 651, Short.MAX_VALUE)
+		);
+		gl_Game.setHorizontalGroup(
+			gl_Game.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_Game.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(mainGame, GroupLayout.PREFERRED_SIZE, 684, GroupLayout.PREFERRED_SIZE)
+					.addGap(766))
+		);
+		gl_Game.setVerticalGroup(
+			gl_Game.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Game.createSequentialGroup()
+					.addComponent(mainGame, GroupLayout.PREFERRED_SIZE, 627, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(22, Short.MAX_VALUE))
+		);
 
 		JLabel worldBackground = new JLabel("");
 		worldBackground.setBounds(0, 11, 676, 544);
@@ -397,7 +476,7 @@ public class MainWindow extends JFrame {
 		mainGame.add(fastForward);
 		mainGame.add(worldBackground);
 
-		JTextArea gameText = new JTextArea();
+		gameText = new JTextArea();
 		gameText.setWrapStyleWord(true);
 		gameText.setFont(new Font("Franklin Gothic Book", Font.PLAIN, 25));
 		gameText.setLineWrap(true);
@@ -408,8 +487,11 @@ public class MainWindow extends JFrame {
 		gameText.setEditable(false);
 		mainGame.add(gameText);
 		Game.setLayout(gl_Game);
-
-		JButton nextDayButton = new JButton();
+		
+		fastForward.setEnabled(false);
+		doubleSpeed.setEnabled(false);
+		
+		nextDayButton = new JButton();
 		nextDayButton.setFont(new Font("Calibri", Font.PLAIN, 14));
 		mainGame.add(nextDayButton);
 		nextDayButton.setBounds(10, 566, 200, 37);
@@ -421,38 +503,44 @@ public class MainWindow extends JFrame {
 					nextDayButton.setText("Next Day");
 					game.initPatientZero();
 					times++;
+					fastForward.setEnabled(true);
+					doubleSpeed.setEnabled(true);
 
 				}
-				Day currentDay = game.simulate();
+				currentDay = game.simulate();
 
 				setTitle("Pestilence Corporation - Day " + currentDay.dayNumber());
-				gameText.setText(
-						" Day " + currentDay.dayNumber() +
-								"\n New cases: " + currentDay.cases() +
-								"\n New recoveries: " + currentDay.recoveries() +
-								"\n Susceptible people: " + currentDay.sus() +
-								"\n Total cases: " + Day.totalCases() +
-								"\n Total deaths: " + Day.totalDeaths() +
-								"\n Total recoveries: " + Day.totalRecoveries());
+				if (updateText(currentDay, gameText)) {
+					nextDayButton.setEnabled(false);
+					fastForward.setEnabled(false);
+					doubleSpeed.setEnabled(false);
+					restartSimulation.setEnabled(false);
+					mainGame.removeAll();
+					setContentPane(statsScreen);
+					statsScreen.add(gameText);
+				}
+				
 			}
 		});
 
 		fastForward.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Day currentDay = null;
+				
 				for (int i = 0; i < advance.getValue(); i++) {
 					currentDay = game.simulate();
+					if(currentDay.infect() == 0) {
+						break;
+					}
 				}
 				setTitle("Pestilence Corporation - Day " + currentDay.dayNumber());
-				gameText.setText(
-						" Day " + currentDay.dayNumber() + 
-						"\n New cases: " + currentDay.cases() +
-						"\n New recoveries: " + currentDay.recoveries() +
-						"\n Susceptible people: " + currentDay.sus() +
-						"\n Total cases: " + Day.totalCases() +
-						"\n Total deaths: " + Day.totalDeaths()+
-						"\n Total recoveries: " + Day.totalRecoveries()
-						);
+				if (updateText(currentDay, gameText)) {
+					nextDayButton.setEnabled(false);
+					fastForward.setEnabled(false);
+					doubleSpeed.setEnabled(false);
+					mainGame.removeAll();
+					setContentPane(statsScreen);
+					statsScreen.add(gameText);
+				}
 			}
 		});
 		fastForward.setBounds(236, 565, 200, 37);
@@ -460,24 +548,67 @@ public class MainWindow extends JFrame {
 
 		doubleSpeed.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Day currentDay = null;
+				
 				for (int i = 0; i < advance.getValue() * 2; i++) {
 					currentDay = game.simulate();
+					if(currentDay.infect() == 0) {
+						break;
+					}
 				}
 				setTitle("Pestilence Corporation - Day " + currentDay.dayNumber());
-				gameText.setText(
-						" Day " + currentDay.dayNumber() + 
-						"\n New cases: " + currentDay.cases() +
-						"\n New recoveries: " + currentDay.recoveries() +
-						"\n Susceptible people: " + currentDay.sus() +
-						"\n Total cases: " + Day.totalCases() +
-						"\n Total deaths: " + Day.totalDeaths()+
-						"\n Total recoveries: " + Day.totalRecoveries()
-						);
+				if (updateText(currentDay, gameText)) {
+					nextDayButton.setEnabled(false);
+					fastForward.setEnabled(false);
+					doubleSpeed.setEnabled(false);
+					mainGame.removeAll();
+					setContentPane(statsScreen);
+					statsScreen.add(gameText);
+				}
+				
+				
 			}
 		});
 		doubleSpeed.setFont(new Font("Calibri", Font.PLAIN, 14));
 		doubleSpeed.setBounds(458, 565, 200, 37);
 		mainGame.add(doubleSpeed);
+		statsScreen.setLayout(null);
+		Game.add(statsScreen);
+
+		
+		JLabel graphScreen = new JLabel("");
+		graphScreen.setIcon(new ImageIcon(MainWindow.class.getResource("/img/icon_small.png")));
+		graphScreen.setLocation(new Point(200, 0));
+		graphScreen.setPreferredSize(new Dimension(500, 500));
+		graphScreen.setBounds(225, -100, 500, 500);
+		statsScreen.add(graphScreen);
+		
+		JButton csvButton = new JButton("Download .csv of data");
+		csvButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser choose = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+	            choose.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				int returnValue = choose.showOpenDialog(null);
+
+	            if(returnValue == JFileChooser.APPROVE_OPTION){
+	                File file = choose.getSelectedFile();
+	                csvButton.setText("Folder Selected: " + file.getName() + " - File saved as " + getDiseaseName().getText() + ".csv");
+	                try {
+						ExcelWriter.writeCsv(getDiseaseName().getText(), file.getAbsolutePath());
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						csvButton.setText("File unable to be written.");
+					}
+	             }else{
+	                csvButton.setText("Open command canceled");
+
+	             } }});
+		csvButton.setFont(new Font("Calibri", Font.PLAIN, 14));
+		csvButton.setBounds(40, 575, 600, 50);
+		statsScreen.add(csvButton);
+
+	}
+	
+	public static JTextField getDiseaseName() {
+		return diseaseName;
 	}
 }

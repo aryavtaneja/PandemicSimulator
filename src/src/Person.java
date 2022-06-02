@@ -117,10 +117,6 @@ public class Person {
          return;
       }
 
-//      if (age >= 29200) {
-//         die();
-//         return;
-//      }
 
       if (infected && !dead) {
          if (incubation > 0) {
