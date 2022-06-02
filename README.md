@@ -1,6 +1,26 @@
-# PandemicSimulator
+# PandemicSimulator <!-- omit in toc -->
 
-## Members:
+## Description
+
+A Java program that simulates a disease propagation based on multiple variables, the final project for the AP Computer Science A course at The Overlake School.
+
+## Table of Contents: <!-- omit in toc -->
+
+- [Description](#description)
+- [Members](#members)
+- [Project Structure](#project-structure)
+- [**Stage 1** Proposal](#stage-1-proposal)
+- [Purpose](#purpose)
+- [Features](#features)
+- [Source Code Overiew](#source-code-overiew)
+  - [`Day.java`](#dayjava)
+  - [`ExcelWriter.java`](#excelwriterjava)
+  - [`MainWindow.java`](#mainwindowjava)
+  - [`Person.java`](#personjava)
+  - [`Simulator.java`](#simulatorjava)
+  - [`Virus.java`](#virusjava)
+
+## Members
 
 - Daniel Welicki
 - Ronan Smith
@@ -9,11 +29,27 @@
 - Fiona Li
 - Ethan Hu
 
-## Description:
+## Project Structure
 
-A Java program that simulates a disease propagation based on multiple variables, the final project for the AP Computer Science A course at The Overlake School.
+```
+├── bin                                 # builds
+| ├── img                               # images
+| └── src                               # class files
+├── notes                               # meeting notes
+├── src                                 # project file
+| ├── img                               # images
+| └── src                               # source code
+├── .gitignore                          # ignore files
+├── eclipseStuff.rar                    # CI file
+├── jgoodies-forms-1.8.0-sources.jar    # JGoodies
+├── jgoodies-forms-1.8.0.jar            # JGoodies
+├── LISCENSE                            # license file
+├── miglayout-src.zip                   # MigLayout
+├── miglayout15-swing.jar               # MigLayout
+└── README.md                           # project description
+```
 
-**Stage 1:** Proposal
+## **Stage 1** Proposal
 
 Goal: Create a simulator to accurately predict the spread of a fictional disease.
 
@@ -54,22 +90,40 @@ Distribution of Labor:
 This project will require 3 people or more, and learning of the swing GUI by at least one member.
 If more members are added, the project can be scalable, adding more ideas as the project expands.
 
-## Project Structure:
-```       
-├── bin                                 # builds
-| ├── img                               # images
-| └── src                               # class files
-├── notes                               # meeting notes
-├── src                                 # project file
-| ├── img                               # images
-| └── src                               # source code
-├── .gitignore                          # ignore files
-├── eclipseStuff.rar                    # CI file
-├── jgoodies-forms-1.8.0-sources.jar    # JGoodies
-├── jgoodies-forms-1.8.0.jar            # JGoodies
-├── LISCENSE                            # license file
-├── miglayout-src.zip                   # MigLayout
-├── miglayout15-swing.jar               # MigLayout
-└── README.md                           # project description
+## Purpose
 
-```
+The purpose of this simulator is to experiment with the spread of a fictional virus, and to see how it affects the population of a city.
+
+## Features
+
+- The program have a GUI that will allow the user to adjust the parameters of the simulation.
+- The program output an excel file that will contain specfic data about the simulation.
+- The program present the statistics of the simulation to the user for each day.
+- The program allow the user to step through the simulation, and see the results of each day.
+- The program also have the option to skip through the simulation, and see the results of the simulation after a certain number of days.
+
+## Source Code Overiew
+
+### `Day.java`
+
+- Record that keeps track of the statistics of the simulation.
+
+### `ExcelWriter.java`
+
+- Writes the data to an excel file.
+
+### `MainWindow.java`
+
+- The main window of the program.
+
+### `Person.java`
+
+- The person object that will be used in the simulation.
+
+### `Simulator.java`
+
+- The simulator object that will run the simulation.
+
+### `Virus.java`
+
+- The virus object that will be used in the simulation.
