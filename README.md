@@ -53,3 +53,15 @@ Note: these ideas are not final, may or may not be in the final project
 Distribution of Labor:
 This project will require 3 people or more, and learning of the swing GUI by at least one member.
 If more members are added, the project can be scalable, adding more ideas as the project expands.
+
+## Project Structure:
+```
+├── bin # builds
+| ├── img # images
+| └── src # class files
+├── notes # meeting notes
+├── src # project file
+| ├── img # images
+| └── src # source code
+└── README.md # project description
+```
