@@ -40,6 +40,7 @@ import javax.swing.JTextArea;
 import javax.swing.DropMode;
 import javax.swing.border.EmptyBorder;
 import java.awt.Point;
+import javax.swing.JProgressBar;
 
 public class MainWindow extends JFrame {
 
@@ -61,6 +62,7 @@ public class MainWindow extends JFrame {
 	private JButton doubleSpeed;
 	private JButton fastForward;
 	private static DecimalFormat numberFormat = new DecimalFormat("#.00");
+	private static JProgressBar infectionsProgressBar;
 	/**
 	 * Launch the application.
 	 */
@@ -88,21 +90,25 @@ public class MainWindow extends JFrame {
 					"\n The initial population was " + game.getPopulation().length + " people." +
 					"\n " + Day.totalDeaths() + " people died." + 
 					"\n " + Day.totalRecoveries() + " people recovered." + 
+					"\n " + Day.totalCases() + "  people were infected." +
 					"\n " + numberFormat.format(((double) Day.totalDeaths() / Day.totalCases()) * 100) + "% of cases died." + 
 					"\n " + numberFormat.format(((double) Day.totalRecoveries() / Day.totalCases()) * 100) + "% of cases recovered."  
+					
 );
 			
 			
 			return true;
 		} else { 
+			infectionsProgressBar.setValue(Day.totalCases());
 			gameText.setText(
 					" Day " + currentDay.dayNumber() +
 							"\n New cases: " + currentDay.cases() +
 							"\n New recoveries: " + currentDay.recoveries() +
 							"\n Susceptible people: " + currentDay.sus() +
-							"\n Total cases: " + Day.totalCases() +
+							"\n Total active cases: " + game.getInfectedPeople().size() +
 							"\n Total deaths: " + Day.totalDeaths() +
-							"\n Total recoveries: " + Day.totalRecoveries());
+							"\n Total recoveries: " + Day.totalRecoveries() +
+							"\n Total infections: " + Day.totalCases());
 			return false;
 			
 		}
@@ -282,6 +288,7 @@ public class MainWindow extends JFrame {
 								"\n The initial population was " + game.getPopulation().length + " people." +
 								"\n " + Day.totalDeaths() + " people died." + 
 								"\n " + Day.totalRecoveries() + " people recovered." +
+								"\n " + Day.totalCases() + " people were infected." +
 								"\n " + numberFormat.format(((double) Day.totalDeaths() / Day.totalCases()) * 100) + "% of cases died." + 
 								"\n " + numberFormat.format(((double) Day.totalRecoveries() / Day.totalCases()) * 100) + "% of cases recovered."  
 
@@ -500,6 +507,7 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				if (times == 0) {
+					infectionsProgressBar.setIndeterminate(false);
 					nextDayButton.setText("Next Day");
 					game.initPatientZero();
 					times++;
@@ -571,6 +579,13 @@ public class MainWindow extends JFrame {
 		doubleSpeed.setFont(new Font("Calibri", Font.PLAIN, 14));
 		doubleSpeed.setBounds(458, 565, 200, 37);
 		mainGame.add(doubleSpeed);
+		
+		infectionsProgressBar = new JProgressBar();
+		infectionsProgressBar.setIndeterminate(true);
+		infectionsProgressBar.setStringPainted(true);
+		infectionsProgressBar.setMaximum(game.getPopulation().length);
+		infectionsProgressBar.setBounds(33, 28, 608, 31);
+		mainGame.add(infectionsProgressBar);
 		statsScreen.setLayout(null);
 		Game.add(statsScreen);
 
@@ -611,4 +626,5 @@ public class MainWindow extends JFrame {
 	public static JTextField getDiseaseName() {
 		return diseaseName;
 	}
+	
 }

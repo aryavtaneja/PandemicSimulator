@@ -8,7 +8,15 @@ public record Day(int dayNumber, int cases, int deaths, int recoveries, int sus,
 	private static int totalCases;
 	private static int totalDeaths;
 	private static int totalRecoveries;
+	private static int totalActive;
 	
+	public static void setTotalActive(int cases) {
+		totalActive = cases;
+	}
+	
+	public static int getTotalActive() {
+		return totalActive;
+	}
 
 	public static void addTotalCases(int cases) {
 		totalCases += cases;
