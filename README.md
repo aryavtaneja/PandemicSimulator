@@ -104,6 +104,8 @@ The purpose of this simulator is to experiment with the spread of a fictional vi
 
 ## Source Code Overiew
 
+### Note: Any Java version higher than Java 17 is required to run this program.
+
 ### `Day.java`
 
 - Record that keeps track of the statistics of the simulation.
