@@ -134,7 +134,7 @@ public class MainWindow extends JFrame {
 		optionsMenu.setMnemonic('1');
 		diseaseConfig.add(optionsMenu);
 
-		JMenu resistanceMenu = new JMenu("Resistance");
+		JMenu resistanceMenu = new JMenu("Resistance Period");
 		resistanceMenu.setMnemonic('1');
 		optionsMenu.add(resistanceMenu);
 
@@ -350,21 +350,6 @@ public class MainWindow extends JFrame {
 		mortalityText.setColumns(2);
 		mortalityText.setBounds(new Rectangle(0, 0, 200, 250));
 		mortalityDropdown.add(mortalityText);
-
-		JMenu susDropdown = new JMenu("Susceptibilities ");
-		variablesMenu.add(susDropdown);
-
-		JTextArea susText = new JTextArea();
-		susText.setWrapStyleWord(true);
-		susText.setText(
-				"Which age groups (children, adults, seniors) are more susceptible to the disease than others. Multiple are possible (i.e. children and seniors), so check off all groups that are susceptible to infection. ");
-		susText.setLineWrap(true);
-		susText.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		susText.setEditable(false);
-		susText.setDropMode(DropMode.INSERT);
-		susText.setColumns(2);
-		susText.setBounds(new Rectangle(0, 0, 200, 250));
-		susDropdown.add(susText);
 
 		JMenu incubationDropdown = new JMenu("Incubation Period");
 		variablesMenu.add(incubationDropdown);
