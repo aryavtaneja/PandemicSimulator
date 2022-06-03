@@ -104,8 +104,8 @@ public class MainWindow extends JFrame {
 					" Day " + currentDay.dayNumber() +
 							"\n New cases: " + currentDay.cases() +
 							"\n New recoveries: " + currentDay.recoveries() +
-							"\n Susceptible people: " + currentDay.sus() +
-							"\n Total active cases: " + game.getInfectedPeople().size() +
+							"\n Susceptible people: " + game.getSusceptibleCount() + 
+							"\n Total active cases: " + (Day.totalCases() - Day.totalRecoveries()) +
 							"\n Total deaths: " + Day.totalDeaths() +
 							"\n Total recoveries: " + Day.totalRecoveries() +
 							"\n Total infections: " + Day.totalCases());

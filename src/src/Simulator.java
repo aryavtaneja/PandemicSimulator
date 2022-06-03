@@ -126,12 +126,19 @@ public class Simulator {
 		Day.addTotalCases(deltaCases);
 		Day.addTotalDeaths(deltaDeaths);
 		Day.addTotalRecoveries(deltaRecoveries);
-		dayData.add(new Day(dayData.size() + 1, deltaCases, deltaDeaths, deltaRecoveries, susceptiblePeople.size(), infectedPeople.size()));
+		
+			dayData.add(new Day(dayData.size() + 1, deltaCases, deltaDeaths, deltaRecoveries, susceptiblePeople.size(), infectedPeople.size()));
+
 		return dayData.get(dayData.size() - 2);
 	}
 
 	public ArrayList<Person> getInfectedPeople() {
 		return infectedPeople;
+	}
+
+	public int getSusceptibleCount() {
+		return susceptiblePeople.size(); 
+
 	}
 
 	public void setInfectedPeople(ArrayList<Person> infectedPeople) {
