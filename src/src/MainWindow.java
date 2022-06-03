@@ -82,7 +82,7 @@ public class MainWindow extends JFrame {
 
 	
 	public static boolean updateText(Day currentDay, JTextArea gameText) {
-		if (currentDay.infect() == 0) {
+		if (game.getInfectedPeople().size() == 0) {
 			gameText.setBounds(50, 300, 620, 384);
 			gameText.setText(
 					" Disease " + getDiseaseName().getText() + " has run it's course." +
@@ -106,7 +106,7 @@ public class MainWindow extends JFrame {
 							"\n New cases: " + currentDay.cases() +
 							"\n New recoveries: " + currentDay.recoveries() +
 							"\n Susceptible people: " + game.getSusceptibleCount() + 
-							"\n Total active cases: " + (Day.totalCases() - Day.totalRecoveries()) +
+							"\n Total active cases: " + game.getInfectedPeople().size() +
 							"\n Total deaths: " + Day.totalDeaths() +
 							"\n Total recoveries: " + Day.totalRecoveries() +
 							"\n Total infections: " + Day.totalCases() + 
