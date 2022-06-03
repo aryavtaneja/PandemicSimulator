@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 
+import javax.swing.JFormattedTextField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
@@ -321,7 +322,7 @@ public class MainWindow extends JFrame {
 
 		JMenu infectivityDropdown = new JMenu("Infectivity");
 		variablesMenu.add(infectivityDropdown);
-
+      
 		JTextArea infectivityText = new JTextArea();
 		infectivityText.setWrapStyleWord(true);
 		infectivityText.setText(
@@ -380,6 +381,7 @@ public class MainWindow extends JFrame {
 		resistanceDropdown.add(resistanceText);
 
 		JMenu goodiesMenu = new JMenu("Goodies ");
+      goodiesMenu.setLayout(null);
 		helpMenu.add(goodiesMenu);
 
 		JLabel icon = new JLabel("");
@@ -392,6 +394,32 @@ public class MainWindow extends JFrame {
 		Game.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(Game);
 		
+      
+      
+        JFormattedTextField easterEggField = new JFormattedTextField();
+        
+
+        easterEggField.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if(easterEggField.getText().toLowerCase().equals("wwssadadba")) {
+                    icon.setIcon(new ImageIcon(MainWindow.class.getResource("/img/morb.jpg")));
+                    goodiesMenu.remove(easterEggField);
+                    
+                    JTextArea morbiusLove = new JTextArea();
+                    morbiusLove.setLineWrap(true);
+                    morbiusLove.setText("If Morbius has a million fans, I am one of them. If Morbius has 5 fans, I am one of them. If Morbius has one fan, That one is me. If Morbius has no fans, I am no longer alive. If the world is against Morbius, I am against the world. Till my last breath, I'll love Morbius (2022).");
+                    morbiusLove.setPreferredSize(new Dimension(250,200));
+
+                    goodiesMenu.add(morbiusLove);
+
+
+                }
+            }
+        });
+        easterEggField.setText("Any konami fans in the chat?");
+        goodiesMenu.add(easterEggField);
+        easterEggField.setColumns(5);
+
 		
 		statsScreen = new JPanel();
 		statsScreen.setBounds(0, 0, 0, 0);
