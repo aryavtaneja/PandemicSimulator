@@ -28,6 +28,7 @@ public class Simulator {
     private static ArrayList <Day> dayData = new ArrayList<>();
     private Virus gameVirus = new Virus();
     private int patientZeroIndex;
+    private static Day maxDay;
     
 	// initializes the population array
     public Simulator() { 
@@ -68,17 +69,15 @@ public class Simulator {
 		getPopulation()[patientZeroIndex].hardInfect(gameVirus);
 		refreshArrayLists();
 		dayData.add(new Day(dayData.size() + 1, 1, 0, 0, susceptiblePeople.size(), infectedPeople.size()));
+		maxDay = dayData.get(0);
 		Day.addTotalCases(1);
 	}
    
-    public void updateInfectability(int infectability) { // updates infectability 
+    public void updateInfectability(int infectability) { // updates infectivity 
 		gameVirus.setInfectability(infectability / 10.0);
 	}
 	public void updateMortality(int mortality) { // updates mortality 
 		gameVirus.setMortality(mortality/ 10.0 );
-	}
-	public void updateSus(boolean[] sus) { // updates susceptibility
-		gameVirus.setSusceptibilities(sus);
 	}
 	public void updateIncubation(int incubation) { // updates incubation 
 		gameVirus.setIncubation(incubation);
@@ -114,7 +113,7 @@ public class Simulator {
 		}
 
 		for (Person person : getPopulation()) {
-			person.update(); // updates sttatus for everyone in population 
+			person.update(); // updates status for everyone in population 
 		}
 		
 		refreshArrayLists();
@@ -127,8 +126,11 @@ public class Simulator {
 		Day.addTotalDeaths(deltaDeaths);
 		Day.addTotalRecoveries(deltaRecoveries);
 		
-			dayData.add(new Day(dayData.size() + 1, deltaCases, deltaDeaths, deltaRecoveries, susceptiblePeople.size(), infectedPeople.size()));
-
+		dayData.add(new Day(dayData.size() + 1, deltaCases, deltaDeaths, deltaRecoveries, susceptiblePeople.size(), infectedPeople.size()));
+		if(getMaxDay().cases() < dayData.get(dayData.size() - 2).cases()){
+			maxDay = dayData.get(dayData.size() - 1);
+			
+		}
 		return dayData.get(dayData.size() - 2);
 	}
 
@@ -150,6 +152,10 @@ public class Simulator {
 	}
 	public static ArrayList<Day> getDayData(){
 		return dayData;
+	}
+
+	public static Day getMaxDay() {
+		return maxDay;
 	}
 }
 	

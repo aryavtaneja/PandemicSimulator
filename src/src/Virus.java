@@ -33,7 +33,6 @@ public class Virus {
 	private String name;
     private double infectability;
 	private double mortality;
-    private boolean[] susceptibilities;
     private int incubation;
     private int resistance;
     
@@ -48,9 +47,6 @@ public class Virus {
         return mortality;
     }
 
-    public boolean[] getSusceptibilities() {
-        return susceptibilities;
-    }
 
     public int getIncubation() {
         return incubation;
@@ -70,9 +66,6 @@ public class Virus {
 		this.mortality = mortality;
 	}
 
-	public void setSusceptibilities(boolean[] susceptibilities) {
-		this.susceptibilities = susceptibilities;
-	}
 
 	public void setIncubation(int incubation) {
 		this.incubation = incubation;

@@ -83,7 +83,7 @@ public class MainWindow extends JFrame {
 	
 	public static boolean updateText(Day currentDay, JTextArea gameText) {
 		if (currentDay.infect() == 0) {
-			gameText.setBounds(50, 330, 620, 384);
+			gameText.setBounds(50, 300, 620, 384);
 			gameText.setText(
 					" Disease " + getDiseaseName().getText() + " has run it's course." +
 					"\n It took " + currentDay.dayNumber() + " days." +
@@ -92,7 +92,8 @@ public class MainWindow extends JFrame {
 					"\n " + Day.totalRecoveries() + " people recovered." + 
 					"\n " + Day.totalCases() + "  people were infected." +
 					"\n " + numberFormat.format(((double) Day.totalDeaths() / Day.totalCases()) * 100) + "% of cases died." + 
-					"\n " + numberFormat.format(((double) Day.totalRecoveries() / Day.totalCases()) * 100) + "% of cases recovered."  
+					"\n " + numberFormat.format(((double) Day.totalRecoveries() / Day.totalCases()) * 100) + "% of cases recovered." +
+					"\n The peak day of infections was Day " + Simulator.getMaxDay().dayNumber() + "."
 					
 );
 			
@@ -108,7 +109,9 @@ public class MainWindow extends JFrame {
 							"\n Total active cases: " + (Day.totalCases() - Day.totalRecoveries()) +
 							"\n Total deaths: " + Day.totalDeaths() +
 							"\n Total recoveries: " + Day.totalRecoveries() +
-							"\n Total infections: " + Day.totalCases());
+							"\n Total infections: " + Day.totalCases() + 
+							"\n Current peak day: " + Simulator.getMaxDay().dayNumber()
+							);
 			return false;
 			
 		}
@@ -214,44 +217,6 @@ public class MainWindow extends JFrame {
 		infectability.setMaximum(10);
 		infectability.setMajorTickSpacing(2);
 
-		JMenu susMenu = new JMenu("Susceptible Groups");
-		susMenu.setMnemonic('5');
-		optionsMenu.add(susMenu);
-
-		JCheckBox youthBox = new JCheckBox("Youth");
-		youthBox.setSelected(true);
-		susMenu.add(youthBox);
-
-		JCheckBox infantBox = new JCheckBox("Infant");
-		infantBox.setSelected(true);
-		susMenu.add(infantBox);
-
-		JCheckBox adultBox = new JCheckBox("Adult");
-		adultBox.setSelected(true);
-		susMenu.add(adultBox);
-
-		JCheckBox boomerBox = new JCheckBox("Boomer");
-		boomerBox.setSelected(true);
-		susMenu.add(boomerBox);
-
-		JButton updateSettings = new JButton("Update Settings");
-		updateSettings.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				boolean[] sus = { infantBox.isSelected(), youthBox.isSelected(), adultBox.isSelected(),
-						boomerBox.isSelected() };
-				game.updateSus(sus);
-			}
-		});
-		updateSettings.setVerticalAlignment(SwingConstants.BOTTOM);
-		updateSettings.setToolTipText("Update Settings");
-		updateSettings.setOpaque(false);
-		updateSettings.setHorizontalAlignment(SwingConstants.LEFT);
-		updateSettings.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		updateSettings.setFocusPainted(false);
-		updateSettings.setBorderPainted(false);
-		updateSettings.setBackground(Color.WHITE);
-		susMenu.add(updateSettings);
-
 		JMenu diseaseNameMenu = new JMenu("Disease Name");
 		diseaseNameMenu.setMnemonic('6');
 		optionsMenu.add(diseaseNameMenu);
@@ -279,7 +244,7 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 
-				gameText.setBounds(50, 330, 620, 384);
+				gameText.setBounds(50, 300, 620, 384);
 
 				gameText.setText(
 						
@@ -290,7 +255,8 @@ public class MainWindow extends JFrame {
 								"\n " + Day.totalRecoveries() + " people recovered." +
 								"\n " + Day.totalCases() + " people were infected." +
 								"\n " + numberFormat.format(((double) Day.totalDeaths() / Day.totalCases()) * 100) + "% of cases died." + 
-								"\n " + numberFormat.format(((double) Day.totalRecoveries() / Day.totalCases()) * 100) + "% of cases recovered."  
+								"\n " + numberFormat.format(((double) Day.totalRecoveries() / Day.totalCases()) * 100) + "% of cases recovered." +
+								"\n The peak day of infections was Day " + Simulator.getMaxDay().dayNumber() + "."
 
 								
 								);
