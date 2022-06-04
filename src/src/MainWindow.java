@@ -239,6 +239,8 @@ public class MainWindow extends JFrame {
 		configMenu.add(mnNewMenu);
 
 		JButton restartSimulation = new JButton("End Simulation");
+		restartSimulation.setEnabled(false);
+
 		restartSimulation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -408,7 +410,7 @@ public class MainWindow extends JFrame {
                     JTextArea morbiusLove = new JTextArea();
                     morbiusLove.setLineWrap(true);
                     morbiusLove.setText("If Morbius has a million fans, I am one of them. If Morbius has 5 fans, I am one of them. If Morbius has one fan, That one is me. If Morbius has no fans, I am no longer alive. If the world is against Morbius, I am against the world. Till my last breath, I'll love Morbius (2022).");
-                    morbiusLove.setPreferredSize(new Dimension(250,200));
+                    morbiusLove.setPreferredSize(new Dimension(250,100));
 
                     goodiesMenu.add(morbiusLove);
 
@@ -490,6 +492,8 @@ public class MainWindow extends JFrame {
 					times++;
 					fastForward.setEnabled(true);
 					doubleSpeed.setEnabled(true);
+					restartSimulation.setEnabled(true);
+
 
 				}
 				currentDay = game.simulate();
